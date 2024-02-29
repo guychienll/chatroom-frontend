@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+    reactStrictMode: false,
+    env: {
+        API_HOST: "http://localhost:8000",
+    },
 };
 
 export default nextConfig;
