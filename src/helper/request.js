@@ -79,7 +79,7 @@ class HttpRequest {
         const response = await fetch(`${CONFIG.API_HOST}${path}`, {
             method: "POST",
             body: formData,
-            ...COMMON_CONFIG,
+            credentials: "include",
             ...options,
         });
 

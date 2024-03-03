@@ -16,4 +16,10 @@ async function getUsers(data) {
     });
 }
 
-export { profile, update, getUsers };
+async function getUser(data) {
+    return HttpRequest.get("/user/get-user", {
+        queryParams: data,
+    });
+}
+
+export { profile, update, getUsers, getUser };

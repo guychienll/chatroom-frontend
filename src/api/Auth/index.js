@@ -29,10 +29,14 @@ async function login(data) {
     });
 }
 
+async function logout() {
+    return HttpRequest.get("/auth/logout");
+}
+
 async function updatePassword(data) {
     return HttpRequest.post("/auth/update-password", {
         data,
     });
 }
 
-export { generateOtp, consumeOtp, register, login, updatePassword };
+export { generateOtp, consumeOtp, register, login, updatePassword, logout };

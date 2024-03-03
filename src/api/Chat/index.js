@@ -1,11 +1,7 @@
 const { HttpRequest } = require("@/helper/request");
 
-async function getUserRooms(data) {
-    return HttpRequest.get("/chat/get-user-rooms", {
-        queryParams: {
-            username: data.username,
-        },
-    });
+async function getUserRooms() {
+    return HttpRequest.get("/chat/get-user-rooms");
 }
 
 export { getUserRooms };
