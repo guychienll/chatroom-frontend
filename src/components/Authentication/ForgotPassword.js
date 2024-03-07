@@ -102,8 +102,7 @@ function ForgotPassword(props) {
                     value={values.username}
                 />
                 {renderValidatorChips("username")}
-
-                <div className="relative mb-2 w-full">
+                <div className="relative w-full">
                     <Input
                         disabled={!remainSec}
                         color={remainSec ? "primary" : "default"}
@@ -131,7 +130,6 @@ function ForgotPassword(props) {
                 <Input
                     disabled={!remainSec}
                     color={remainSec ? "primary" : "default"}
-                    className="mb-2"
                     label="新密碼"
                     placeholder="請輸入欲更改密碼"
                     name="password"
@@ -144,7 +142,6 @@ function ForgotPassword(props) {
                 <Input
                     disabled={!remainSec}
                     color={remainSec ? "primary" : "default"}
-                    className="mb-2"
                     label="確認密碼"
                     placeholder="請再次輸入欲更改密碼"
                     name="confirm"
