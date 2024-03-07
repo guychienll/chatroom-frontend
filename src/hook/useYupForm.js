@@ -39,7 +39,7 @@ export const useYupForm = (initialValues, schema) => {
 
     const renderValidatorChips = (name) => {
         return (
-            <div className="flex flex-wrap gap-x-1 py-2">
+            <div className="flex flex-wrap py-2">
                 {schema.fields[name].tests.map((test) => {
                     const options = test.OPTIONS;
                     const isValid = !errors.some(
@@ -48,7 +48,7 @@ export const useYupForm = (initialValues, schema) => {
                     return (
                         <Chip
                             color={isValid ? "success" : "danger"}
-                            className="text-white"
+                            className="mr-1 text-white"
                             variant="solid"
                             startContent={
                                 isValid ? (
