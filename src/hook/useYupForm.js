@@ -39,7 +39,7 @@ export const useYupForm = (initialValues, schema) => {
 
     const renderValidatorChips = (name) => {
         return (
-            <div className="my-2 flex flex-wrap gap-x-1">
+            <div className="flex flex-wrap gap-x-1 py-2">
                 {schema.fields[name].tests.map((test) => {
                     const options = test.OPTIONS;
                     const isValid = !errors.some(
