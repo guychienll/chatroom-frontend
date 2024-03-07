@@ -1,8 +1,9 @@
 import { register } from "@/api/Auth";
+import { STEP } from "@/components/Authentication/constants";
+import Logo from "@/components/Logo";
 import { Button, Card, CardBody, CardHeader, Input } from "@nextui-org/react";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { STEP } from "./constants";
 
 Registration.propTypes = {
     username: PropTypes.string,
@@ -43,10 +44,8 @@ function Registration(props) {
     };
     return (
         <Card radius="lg" className="w-[300px] transition-height">
-            <CardHeader>
-                <div className="w-full text-center text-2xl font-extrabold italic tracking-wider text-danger">
-                    ChatRoom
-                </div>
+            <CardHeader className="flex justify-center">
+                <Logo className="text-2xl" />
             </CardHeader>
             <CardBody className="">
                 <form onSubmit={onSubmit}>

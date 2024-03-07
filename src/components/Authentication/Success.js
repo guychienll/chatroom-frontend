@@ -1,3 +1,4 @@
+import Logo from "@/components/Logo";
 import {
     Button,
     Card,
@@ -5,23 +6,19 @@ import {
     CardFooter,
     CardHeader,
 } from "@nextui-org/react";
+import Link from "next/link";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
-import PropTypes from "prop-types";
-import { STEP } from "./constants";
 
-Success.propTypes = {
-    goTo: PropTypes.func,
-};
+Success.propTypes = {};
 
-function Success({ goTo }) {
+function Success() {
     return (
         <Card radius="lg" className="w-[300px] transition-height">
-            <CardHeader>
-                <div className="w-full text-center text-2xl font-extrabold italic tracking-wider text-danger">
-                    ChatRoom
-                </div>
+            <CardHeader className="flex justify-center">
+                <Logo className="text-2xl" />
             </CardHeader>
-            <CardBody className="flex flex-col items-center">
+
+            <CardBody className="flex flex-col items-center gap-y-4">
                 <IoCheckmarkDoneCircle
                     size={72}
                     className="animate-appearance-in text-success"
@@ -32,9 +29,8 @@ function Success({ goTo }) {
             </CardBody>
             <CardFooter>
                 <Button
-                    onClick={() => {
-                        goTo(STEP.LOGIN);
-                    }}
+                    as={Link}
+                    href="/auth"
                     variant="solid"
                     color="danger"
                     className="w-full"

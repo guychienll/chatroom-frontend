@@ -1,4 +1,6 @@
 import * as authApi from "@/api/Auth";
+import { STEP } from "@/components/Authentication/constants";
+import Logo from "@/components/Logo";
 import useCountDownTimer from "@/hook/useCountDownTimer";
 import {
     Button,
@@ -10,21 +12,19 @@ import {
 } from "@nextui-org/react";
 import PropTypes from "prop-types";
 import { useCallback, useState } from "react";
-import { STEP } from "./constants";
 
-ForgotPassword.propTypes = {
+Otp.propTypes = {
     goTo: PropTypes.func,
+    onConsumed: PropTypes.func,
+    username: PropTypes.string,
 };
 
 const TOTAL_SECONDS = 60;
-
-function ForgotPassword(props) {
-    const { goTo } = props;
+function Otp(props) {
+    const { goTo, onConsumed, username } = props;
     const [values, setValues] = useState({
-        username: "",
+        username: username || "",
         validation: "",
-        password: "",
-        confirm: "",
     });
 
     const onTimeIsUp = useCallback(() => {
@@ -38,14 +38,13 @@ function ForgotPassword(props) {
         totalSeconds: TOTAL_SECONDS,
         onTimeIsUp,
     });
-
     const [isOtpGenerating, setIsOtpGenerating] = useState(false);
     const [isOtpConsuming, setIsOtpConsuming] = useState(false);
 
-    const handleGenerateOtp = async () => {
+    const handleSendValidationMail = async () => {
         try {
             setIsOtpGenerating(true);
-            await authApi.generateOtp(values.username, "forgot-password");
+            await authApi.generateOtp(values.username, "register");
             reset();
         } catch (e) {
             alert(e.message);
@@ -54,15 +53,12 @@ function ForgotPassword(props) {
         }
     };
 
-    const handleUpdatePassword = async () => {
+    const handleValidate = async () => {
         try {
             setIsOtpConsuming(true);
-            await authApi.updatePassword({
-                password: values.password,
-                otp: values.validation,
-                otpType: "forgot-password",
-            });
-            goTo(STEP.SUCCESS);
+            await authApi.consumeOtp(values.validation, "register");
+            onConsumed(values.username);
+            goTo(STEP.REGISTRATION);
         } catch (e) {
             alert(e.message);
         } finally {
@@ -80,10 +76,8 @@ function ForgotPassword(props) {
 
     return (
         <Card radius="lg" className="w-[300px] transition-height">
-            <CardHeader>
-                <div className="w-full text-center text-2xl font-extrabold italic tracking-wider text-danger">
-                    ChatRoom
-                </div>
+            <CardHeader className="flex justify-center">
+                <Logo className="text-2xl" />
             </CardHeader>
             <CardBody className="flex flex-col items-center">
                 <Input
@@ -121,30 +115,6 @@ function ForgotPassword(props) {
                         isStriped
                     />
                 </div>
-                <Input
-                    disabled={!remainSec}
-                    color={remainSec ? "primary" : "default"}
-                    className="mb-2"
-                    label="新密碼"
-                    placeholder="請輸入欲更改密碼"
-                    name="password"
-                    type="password"
-                    autoComplete="new-password"
-                    onChange={handleChange}
-                    value={values.password}
-                />
-                <Input
-                    disabled={!remainSec}
-                    color={remainSec ? "primary" : "default"}
-                    className="mb-2"
-                    label="確認密碼"
-                    placeholder="請再次輸入欲更改密碼"
-                    name="confirm"
-                    type="password"
-                    autoComplete="new-password"
-                    onChange={handleChange}
-                    value={values.confirm}
-                />
                 {remainSec ? (
                     <Button
                         isLoading={isOtpConsuming}
@@ -153,9 +123,9 @@ function ForgotPassword(props) {
                         type="button"
                         color="danger"
                         variant="solid"
-                        onClick={handleUpdatePassword}
+                        onClick={handleValidate}
                     >
-                        更改密碼
+                        前往註冊
                     </Button>
                 ) : (
                     <Button
@@ -165,7 +135,7 @@ function ForgotPassword(props) {
                         type="button"
                         color="danger"
                         variant="solid"
-                        onClick={handleGenerateOtp}
+                        onClick={handleSendValidationMail}
                     >
                         寄送驗證信
                     </Button>
@@ -175,4 +145,4 @@ function ForgotPassword(props) {
     );
 }
 
-export default ForgotPassword;
+export default Otp;

@@ -1,7 +1,11 @@
 const { HttpRequest } = require("@/helper/request");
 
 async function profile() {
-    return HttpRequest.get("/user/profile");
+    try {
+        return await HttpRequest.get("/user/profile");
+    } catch (e) {
+        return null;
+    }
 }
 
 async function update(data) {

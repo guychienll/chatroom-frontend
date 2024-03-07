@@ -1,3 +1,7 @@
+import * as authApi from "@/api/Auth";
+import * as userApi from "@/api/User";
+import Logo from "@/components/Logo";
+import useUserStore from "@/stores/user";
 import {
     Button,
     Card,
@@ -6,19 +10,12 @@ import {
     CardHeader,
     Input,
 } from "@nextui-org/react";
-import PropTypes from "prop-types";
+import Link from "next/link";
 import { useState } from "react";
-import { STEP } from "./constants";
-import * as authApi from "@/api/Auth";
-import * as userApi from "@/api/User";
-import useUserStore from "@/stores/user";
 
-Login.propTypes = {
-    goTo: PropTypes.func,
-};
+Login.propTypes = {};
 
-function Login(props) {
-    const { goTo } = props;
+function Login() {
     const [values, setValues] = useState({
         username: "",
         password: "",
@@ -54,10 +51,8 @@ function Login(props) {
 
     return (
         <Card radius="lg" className="w-[300px] transition-height">
-            <CardHeader>
-                <div className="w-full text-center text-2xl font-extrabold italic tracking-wider text-danger">
-                    ChatRoom
-                </div>
+            <CardHeader className="flex justify-center">
+                <Logo className="text-2xl" />
             </CardHeader>
             <CardBody className="">
                 <form onSubmit={onSubmit}>
@@ -96,9 +91,8 @@ function Login(props) {
             </CardBody>
             <CardFooter className="flex flex-col">
                 <Button
-                    onClick={() => {
-                        goTo(STEP.FORGOT_PASSWORD);
-                    }}
+                    as={Link}
+                    href="/auth/forgot-password"
                     color="danger"
                     variant="flat"
                     className="mb-2 w-full bg-transparent"
@@ -106,9 +100,8 @@ function Login(props) {
                     忘記密碼
                 </Button>
                 <Button
-                    onClick={() => {
-                        goTo(STEP.OTP);
-                    }}
+                    as={Link}
+                    href="/auth/register"
                     color="danger"
                     variant="ghost"
                     className="w-full"

@@ -1,21 +1,12 @@
+import * as fileApi from "@/api/File";
 import useUserStore from "@/stores/user";
 import WS, { CLIENT_HANDLE_ACTIONS } from "@/websocket";
-import {
-    Button,
-    Card,
-    CardHeader,
-    User,
-    useDisclosure,
-} from "@nextui-org/react";
+import { Card, CardHeader, User, useDisclosure } from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
-import { IoIosLogOut } from "react-icons/io";
-import * as authApi from "@/api/Auth";
-import * as fileApi from "@/api/File";
-
-import ProfileEditor from "./ProfileEditor";
-import { STEP } from "./constants";
-import WaitingRoom from "./WaitingRoom";
 import ChattingRoom from "./ChattingRoom";
+import ProfileEditor from "./ProfileEditor";
+import WaitingRoom from "./WaitingRoom";
+import { STEP } from "./constants";
 
 const Chat = () => {
     const { profile } = useUserStore((state) => state);
@@ -97,17 +88,6 @@ const Chat = () => {
                             className: "cursor-pointer",
                         }}
                     />
-                    <Button
-                        onClick={async () => {
-                            await authApi.logout();
-                            window.location.reload();
-                        }}
-                        color="danger"
-                        variant="flat"
-                        isIconOnly
-                    >
-                        <IoIosLogOut size={20} />
-                    </Button>
                 </CardHeader>
                 {isShowWaitingRoom && (
                     <WaitingRoom step={step} setStep={setStep} />

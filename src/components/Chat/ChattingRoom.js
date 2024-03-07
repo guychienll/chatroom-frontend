@@ -10,14 +10,14 @@ import {
     Input,
     useDisclosure,
 } from "@nextui-org/react";
+import clsx from "clsx";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
-import { Fragment, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { IoIosArrowBack, IoMdImages, IoMdSend } from "react-icons/io";
 import { v4 as uuid } from "uuid";
-import { MESSAGE_TYPE } from "./constants";
-import clsx from "clsx";
 import ProfileEditor from "./ProfileEditor";
+import { MESSAGE_TYPE } from "./constants";
 
 ChattingRoom.propTypes = {
     room: PropTypes.object.isRequired,

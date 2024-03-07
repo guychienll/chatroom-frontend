@@ -58,9 +58,13 @@ function ProfileEditor(props) {
     const handleUpdateAvatar = async (e) => {
         const url = await uploadFile(e, profile.username.split("@")[0]);
         const resp = await userApi.update({
-            ...profile,
+            nickname: profile.nickname || "",
+            birthday: profile.birthday || "",
+            gender: profile.gender || "",
+            bio: profile.bio || "",
             avatar: url,
         });
+
         if (resp.avatar) {
             setProfile({
                 ...profile,

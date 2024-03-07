@@ -1,4 +1,4 @@
-const { HttpRequest } = require("@/helper/request");
+import { HttpRequest } from "@/helper/request";
 
 async function generateOtp(username, otpType) {
     return HttpRequest.post("/auth/generate-otp", {
@@ -9,10 +9,11 @@ async function generateOtp(username, otpType) {
     });
 }
 
-async function consumeOtp(otp) {
+async function consumeOtp(otp, otpType) {
     return HttpRequest.post("/auth/consume-otp", {
         data: {
             otp,
+            otpType,
         },
     });
 }
