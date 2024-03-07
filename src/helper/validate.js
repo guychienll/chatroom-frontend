@@ -27,4 +27,21 @@ const ForgotPasswordFormSchema = object({
     confirm: PasswordConfirm,
 });
 
-export { ForgotPasswordFormSchema, LoginFormSchema, QuickRegisterFormSchema };
+const OtpFormSchema = object({
+    username: Email,
+    validation: Otp,
+});
+
+const RegistrationFormSchema = object({
+    username: Email,
+    password: Password,
+    confirm: PasswordConfirm,
+});
+
+export {
+    ForgotPasswordFormSchema,
+    LoginFormSchema,
+    OtpFormSchema,
+    QuickRegisterFormSchema,
+    RegistrationFormSchema,
+};

@@ -1,7 +1,9 @@
 import * as authApi from "@/api/Auth";
 import { STEP } from "@/components/Authentication/constants";
 import Logo from "@/components/Logo";
+import { OtpFormSchema } from "@/helper/validate";
 import useCountDownTimer from "@/hook/useCountDownTimer";
+import { useYupForm } from "@/hook/useYupForm";
 import {
     Button,
     Card,
@@ -22,17 +24,23 @@ Otp.propTypes = {
 const TOTAL_SECONDS = 60;
 function Otp(props) {
     const { goTo, onConsumed, username } = props;
-    const [values, setValues] = useState({
-        username: username || "",
-        validation: "",
-    });
+    const {
+        values,
+        onValueChange,
+        isValid,
+        renderValidatorChips,
+        getFiledValid,
+    } = useYupForm(
+        {
+            username: username || "",
+            validation: "",
+        },
+        OtpFormSchema,
+    );
 
     const onTimeIsUp = useCallback(() => {
-        setValues((prev) => ({
-            ...prev,
-            validation: "",
-        }));
-    }, []);
+        onValueChange("validation")("");
+    }, [onValueChange]);
 
     const { seconds: remainSec, reset } = useCountDownTimer({
         totalSeconds: TOTAL_SECONDS,
@@ -43,6 +51,9 @@ function Otp(props) {
 
     const handleSendValidationMail = async () => {
         try {
+            if (!getFiledValid("username")) {
+                return;
+            }
             setIsOtpGenerating(true);
             await authApi.generateOtp(values.username, "register");
             reset();
@@ -55,6 +66,9 @@ function Otp(props) {
 
     const handleValidate = async () => {
         try {
+            if (!isValid) {
+                return;
+            }
             setIsOtpConsuming(true);
             await authApi.consumeOtp(values.validation, "register");
             onConsumed(values.username);
@@ -66,32 +80,24 @@ function Otp(props) {
         }
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setValues((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
-
     return (
         <Card radius="lg" className="w-[300px] transition-height">
             <CardHeader className="flex justify-center">
                 <Logo className="text-2xl" />
             </CardHeader>
-            <CardBody className="flex flex-col items-center">
+            <CardBody className="flex flex-col">
                 <Input
                     disabled={remainSec}
                     color={remainSec ? "default" : "primary"}
-                    className="mb-2"
                     label="帳號"
                     placeholder="請輸入註冊信箱"
                     name="username"
                     type="email"
-                    onChange={handleChange}
+                    onValueChange={onValueChange("username")}
                     value={values.username}
                 />
-                <div className="relative mb-2 w-full">
+                {renderValidatorChips("username")}
+                <div className="relative w-full">
                     <Input
                         disabled={!remainSec}
                         color={remainSec ? "primary" : "default"}
@@ -100,7 +106,7 @@ function Otp(props) {
                         placeholder="請輸入 6 位驗證碼"
                         name="validation"
                         type="text"
-                        onChange={handleChange}
+                        onValueChange={onValueChange("validation")}
                         value={values.validation}
                         autoComplete="new-password"
                     />
@@ -115,6 +121,7 @@ function Otp(props) {
                         isStriped
                     />
                 </div>
+                {renderValidatorChips("validation")}
                 {remainSec ? (
                     <Button
                         isLoading={isOtpConsuming}
