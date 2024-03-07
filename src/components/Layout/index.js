@@ -10,21 +10,90 @@ import {
     NavbarBrand,
     NavbarContent,
     NavbarItem,
+    NavbarMenu,
+    NavbarMenuItem,
+    NavbarMenuToggle,
     User,
 } from "@nextui-org/react";
+import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+LoginPane.propTypes = {
+    className: PropTypes.string,
+    onClick: PropTypes.func,
+};
+function LoginPane({ className, onClick }) {
+    const { profile, loading, cleanProfile } = useUserStore((state) => state);
+    const router = useRouter();
+    return (
+        <div className={clsx("", className)}>
+            {profile ? (
+                <NavbarItem className="flex animate-appearance-in gap-x-4">
+                    <User
+                        name={
+                            profile.nickname || profile.username.split("@")[0]
+                        }
+                        description={profile.username}
+                        avatarProps={{
+                            size: "sm",
+                            src: profile.avatar,
+                        }}
+                    />
+                    <Button
+                        onClick={async () => {
+                            await authApi.logout();
+                            await router.push("/");
+                            cleanProfile();
+                            onClick && onClick();
+                        }}
+                        color="danger"
+                        variant="ghost"
+                        className="tracking-wider"
+                    >
+                        登出
+                    </Button>
+                </NavbarItem>
+            ) : (
+                <NavbarItem>
+                    <Button
+                        onClick={async () => {
+                            await router.push("/auth");
+                            onClick && onClick();
+                        }}
+                        isLoading={loading}
+                        color="danger"
+                        variant="flat"
+                        className="tracking-wider"
+                    >
+                        登入 / 註冊
+                    </Button>
+                </NavbarItem>
+            )}
+        </div>
+    );
+}
 
 Layout.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
 function Layout({ children }) {
-    const { profile, setProfile, cleanProfile, setLoading, loading } =
-        useUserStore((state) => state);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { setProfile, setLoading } = useUserStore((state) => state);
     const router = useRouter();
+
+    const MENU_ITEMS = [
+        {
+            key: "chat",
+            label: "聊天室",
+            action: async () => {
+                router.push("/chat");
+            },
+        },
+    ];
 
     useEffect(() => {
         (async () => {
@@ -45,7 +114,16 @@ function Layout({ children }) {
 
     return (
         <div className="min-h-screen bg-[#ffffff]">
-            <Navbar isBlurred>
+            <Navbar
+                isBlurred
+                isMenuOpen={isMenuOpen}
+                onMenuOpenChange={setIsMenuOpen}
+            >
+                <NavbarMenuToggle
+                    aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
+                    className="sm:hidden"
+                    color="danger"
+                />
                 <NavbarBrand>
                     <Link href="/">
                         <Logo className="text-2xl" />
@@ -61,48 +139,34 @@ function Layout({ children }) {
                         </Link>
                     </NavbarItem>
                 </NavbarContent>
-                <NavbarContent justify="end">
-                    {profile ? (
-                        <NavbarItem className="flex animate-appearance-in gap-x-4">
-                            <User
-                                name={
-                                    profile.nickname ||
-                                    profile.username.split("@")[0]
-                                }
-                                description={profile.username}
-                                avatarProps={{
-                                    size: "sm",
-                                    src: profile.avatar,
-                                }}
-                            />
-                            <Button
-                                onClick={async () => {
-                                    await authApi.logout();
-                                    await router.push("/");
-                                    cleanProfile();
-                                }}
-                                color="danger"
-                                variant="ghost"
-                                className="tracking-wider"
-                            >
-                                登出
-                            </Button>
-                        </NavbarItem>
-                    ) : (
-                        <NavbarItem>
-                            <Button
-                                isLoading={loading}
-                                as={Link}
-                                href="/auth"
-                                color="danger"
-                                variant="flat"
-                                className="tracking-wider"
-                            >
-                                登入 / 註冊
-                            </Button>
-                        </NavbarItem>
-                    )}
+                <NavbarContent className="hidden gap-4 sm:flex" justify="end">
+                    <LoginPane />
                 </NavbarContent>
+
+                <NavbarMenu>
+                    {MENU_ITEMS.map((item) => (
+                        <NavbarMenuItem key={item.key}>
+                            <Button
+                                color="default"
+                                className="w-full"
+                                variant="text"
+                                size="lg"
+                                onClick={async () => {
+                                    await item.action();
+                                    setIsMenuOpen(false);
+                                }}
+                            >
+                                {item.label}
+                            </Button>
+                        </NavbarMenuItem>
+                    ))}
+                    <LoginPane
+                        className="flex justify-center"
+                        onClick={() => {
+                            setIsMenuOpen(false);
+                        }}
+                    />
+                </NavbarMenu>
             </Navbar>
             <main className="min-h-[calc(100dvh-4rem)]">{children}</main>
             <Footer />
