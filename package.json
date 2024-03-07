@@ -24,6 +24,7 @@
         "react-dom": "^18",
         "react-icons": "^5.0.1",
         "xstate": "^5.8.0",
+        "yup": "^1.4.0",
         "zustand": "^4.5.1"
     },
     "devDependencies": {

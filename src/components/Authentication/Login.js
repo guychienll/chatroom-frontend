@@ -1,6 +1,7 @@
 import * as authApi from "@/api/Auth";
 import * as userApi from "@/api/User";
 import Logo from "@/components/Logo";
+import { LoginFormSchema } from "@/helper/validate";
 import useUserStore from "@/stores/user";
 import {
     Button,
@@ -12,14 +13,19 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 import { useState } from "react";
+import { useYupForm } from "../../hook/useYupForm";
 
 Login.propTypes = {};
 
 function Login() {
-    const [values, setValues] = useState({
-        username: "",
-        password: "",
-    });
+    const { values, isValid, onValueChange, renderValidatorChips } = useYupForm(
+        {
+            username: "",
+            password: "",
+        },
+        LoginFormSchema,
+    );
+
     const [loading, setLoading] = useState(false);
     const setProfile = useUserStore((state) => state.setProfile);
 
@@ -27,6 +33,10 @@ function Login() {
         try {
             e.preventDefault();
             setLoading(true);
+
+            if (!isValid) {
+                return;
+            }
 
             await authApi.login(values);
             const profile = await userApi.profile(values);
@@ -39,45 +49,35 @@ function Login() {
         }
     };
 
-    const onChange = (e) => {
-        const { name, value } = e.target;
-        setValues((prev) => {
-            return {
-                ...prev,
-                [name]: value,
-            };
-        });
-    };
-
     return (
         <Card radius="lg" className="w-[300px] transition-height">
             <CardHeader className="flex justify-center">
                 <Logo className="text-2xl" />
             </CardHeader>
-            <CardBody className="">
+            <CardBody>
                 <form onSubmit={onSubmit}>
                     <Input
                         color="primary"
-                        className="mb-2"
                         label="帳號"
                         placeholder="請輸入註冊信箱"
                         name="username"
                         type="text"
-                        onChange={onChange}
+                        onValueChange={onValueChange("username")}
                         autoComplete="username"
                         value={values.username}
                     />
+                    {renderValidatorChips("username")}
                     <Input
                         color="primary"
-                        className="mb-2"
                         label="密碼"
                         autoComplete="current-password"
                         placeholder="請輸入密碼"
                         name="password"
                         type="password"
-                        onChange={onChange}
+                        onValueChange={onValueChange("password")}
                         value={values.password}
                     />
+                    {renderValidatorChips("password")}
                     <Button
                         isLoading={loading}
                         className="w-full"

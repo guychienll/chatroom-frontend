@@ -1,7 +1,9 @@
 import * as authApi from "@/api/Auth";
 import { STEP } from "@/components/Authentication/constants";
 import Logo from "@/components/Logo";
+import { ForgotPasswordFormSchema } from "@/helper/validate";
 import useCountDownTimer from "@/hook/useCountDownTimer";
+import { useYupForm } from "@/hook/useYupForm";
 import {
     Button,
     Card,
@@ -21,19 +23,25 @@ const TOTAL_SECONDS = 60;
 
 function ForgotPassword(props) {
     const { goTo } = props;
-    const [values, setValues] = useState({
-        username: "",
-        validation: "",
-        password: "",
-        confirm: "",
-    });
+    const {
+        values,
+        isValid,
+        onValueChange,
+        renderValidatorChips,
+        getFiledValid,
+    } = useYupForm(
+        {
+            username: "",
+            validation: "",
+            password: "",
+            confirm: "",
+        },
+        ForgotPasswordFormSchema,
+    );
 
     const onTimeIsUp = useCallback(() => {
-        setValues((prev) => ({
-            ...prev,
-            validation: "",
-        }));
-    }, []);
+        onValueChange("validation")("");
+    }, [onValueChange]);
 
     const { seconds: remainSec, reset } = useCountDownTimer({
         totalSeconds: TOTAL_SECONDS,
@@ -46,6 +54,9 @@ function ForgotPassword(props) {
     const handleGenerateOtp = async () => {
         try {
             setIsOtpGenerating(true);
+            if (!getFiledValid("username")) {
+                return;
+            }
             await authApi.generateOtp(values.username, "forgot-password");
             reset();
         } catch (e) {
@@ -57,6 +68,9 @@ function ForgotPassword(props) {
 
     const handleUpdatePassword = async () => {
         try {
+            if (!isValid) {
+                return;
+            }
             setIsOtpConsuming(true);
             await authApi.updatePassword({
                 password: values.password,
@@ -71,31 +85,24 @@ function ForgotPassword(props) {
         }
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setValues((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
-
     return (
         <Card radius="lg" className="w-[300px] transition-height">
             <CardHeader className="flex justify-center">
                 <Logo className="text-2xl" />
             </CardHeader>
-            <CardBody className="flex flex-col items-center">
+            <CardBody className="flex flex-col">
                 <Input
                     disabled={remainSec}
                     color={remainSec ? "default" : "primary"}
-                    className="mb-2"
                     label="帳號"
                     placeholder="請輸入註冊信箱"
                     name="username"
                     type="email"
-                    onChange={handleChange}
+                    onValueChange={onValueChange("username")}
                     value={values.username}
                 />
+                {renderValidatorChips("username")}
+
                 <div className="relative mb-2 w-full">
                     <Input
                         disabled={!remainSec}
@@ -105,7 +112,7 @@ function ForgotPassword(props) {
                         placeholder="請輸入 6 位驗證碼"
                         name="validation"
                         type="text"
-                        onChange={handleChange}
+                        onValueChange={onValueChange("validation")}
                         value={values.validation}
                         autoComplete="new-password"
                     />
@@ -120,6 +127,7 @@ function ForgotPassword(props) {
                         isStriped
                     />
                 </div>
+                {renderValidatorChips("validation")}
                 <Input
                     disabled={!remainSec}
                     color={remainSec ? "primary" : "default"}
@@ -129,9 +137,10 @@ function ForgotPassword(props) {
                     name="password"
                     type="password"
                     autoComplete="new-password"
-                    onChange={handleChange}
+                    onValueChange={onValueChange("password")}
                     value={values.password}
                 />
+                {renderValidatorChips("password")}
                 <Input
                     disabled={!remainSec}
                     color={remainSec ? "primary" : "default"}
@@ -141,9 +150,10 @@ function ForgotPassword(props) {
                     name="confirm"
                     type="password"
                     autoComplete="new-password"
-                    onChange={handleChange}
+                    onValueChange={onValueChange("confirm")}
                     value={values.confirm}
                 />
+                {renderValidatorChips("confirm")}
                 {remainSec ? (
                     <Button
                         isLoading={isOtpConsuming}

@@ -1,13 +1,8 @@
-import {
-    Button,
-    Card,
-    CardBody,
-    CardHeader,
-    Image,
-    Input,
-} from "@nextui-org/react";
+import Chip from "@/components/Home/Chip";
+import FeatureCard from "@/components/Home/FeatureCard";
+import { QuickRegisterFormSchema } from "@/helper/validate";
+import { Button, Image, Input } from "@nextui-org/react";
 import { useRouter } from "next/router";
-import PropTypes from "prop-types";
 import { useState } from "react";
 import {
     BsFillChatSquareDotsFill,
@@ -15,17 +10,6 @@ import {
 } from "react-icons/bs";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import { RiChatPrivateFill } from "react-icons/ri";
-
-Chip.propTypes = {
-    children: PropTypes.node,
-};
-function Chip({ children }) {
-    return (
-        <div className="inline min-w-[150px] rounded-2xl bg-danger/60 px-8 py-4 text-center text-xl tracking-widest text-white backdrop-blur-md md:text-3xl">
-            {children}
-        </div>
-    );
-}
 
 const FEATURES = [
     {
@@ -59,31 +43,27 @@ const FEATURES = [
     },
 ];
 
-FeatureCard.propTypes = {
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    icon: PropTypes.node.isRequired,
-};
-
-function FeatureCard({ title, description, icon }) {
-    return (
-        <Card className="w-[240px] gap-y-4 py-4">
-            <CardHeader className="flex-col items-center gap-y-4 px-4 pb-0 pt-2">
-                <h4 className="text-2xl font-bold text-danger">{title}</h4>
-                <small className="whitespace-pre-line text-default-500">
-                    {description}
-                </small>
-            </CardHeader>
-            <CardBody className="flex flex-col items-center py-2">
-                {icon}
-            </CardBody>
-        </Card>
-    );
-}
-
 function Home() {
     const router = useRouter();
-    const [email, setEmail] = useState("");
+    const [values, setValues] = useState({
+        email: "",
+    });
+    const [errors, setErrors] = useState({
+        email: "",
+    });
+
+    const handleSubmit = async () => {
+        try {
+            await QuickRegisterFormSchema.validate(values);
+            await router.push(`/auth/register?email=${values.email}`);
+        } catch (err) {
+            setErrors((prev) => ({
+                ...prev,
+                email: err.message,
+            }));
+        }
+    };
+
     return (
         <div className="min-h-[calc(100dvh-4rem)] bg-[#F7F6F2] px-4 py-6">
             <div className="content ml-auto mr-auto max-w-[1296px]">
@@ -103,34 +83,36 @@ function Home() {
                     <Image
                         src="/logo.png"
                         alt="banner"
-                        className="max-w-[300px] md:max-w-[400px]"
+                        className="max-w-[300px] md:max-w-[450px]"
                         width={1024}
                         height={1024}
                     />
                 </div>
 
-                <div className="join-us  ml-auto mr-auto max-w-[1296px]">
+                <div className="join-us">
                     <div className="flex flex-col items-center gap-y-4 p-4 text-center md:p-12">
                         <h2 className="text-4xl font-bold text-danger">
                             加入我們
                         </h2>
-                        <p className="text-default-500">開始你的愛情冒險</p>
+                        <p className="text-default-500">填入信箱即可註冊</p>
                         <Input
                             name="email"
                             label="信箱"
                             className="max-w-96"
-                            color="danger"
+                            color="default"
                             placeholder="請填入註冊信箱"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={values.email}
+                            isInvalid={!!errors.email}
+                            onChange={(e) =>
+                                setValues((prev) => ({
+                                    ...prev,
+                                    email: e.target.value,
+                                }))
+                            }
                         />
                         <Button
                             type="button"
-                            onClick={async () => {
-                                await router.push(
-                                    `/auth/register?email=${email}`,
-                                );
-                            }}
+                            onClick={handleSubmit}
                             color="danger"
                             variant="solid"
                             size="lg"
@@ -140,7 +122,7 @@ function Home() {
                     </div>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-evenly gap-4 p-4 text-center md:p-12">
+                <div className="features flex flex-wrap items-center justify-evenly gap-4 p-4 text-center md:p-12">
                     {FEATURES.map((feature) => (
                         <FeatureCard
                             key={feature.title}
