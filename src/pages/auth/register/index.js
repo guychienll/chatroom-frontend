@@ -1,6 +1,6 @@
 import { STEP } from "@/components/Authentication/constants";
 import Redirect from "@/components/Redirect";
-import { withAuthGuard } from "@/pages/hocs/AuthGuard";
+import { withAuthGuard } from "@/hocs/AuthGuard";
 import { Spinner } from "@nextui-org/react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";

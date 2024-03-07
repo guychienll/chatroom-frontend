@@ -3,7 +3,7 @@ import Redirect from "@/components/Redirect";
 import { Spinner } from "@nextui-org/react";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { withAuthGuard } from "../hocs/AuthGuard";
+import { withAuthGuard } from "../../hocs/AuthGuard";
 
 const Login = dynamic(() => import("@/components/Authentication/Login"), {
     loading: () => <Spinner />,

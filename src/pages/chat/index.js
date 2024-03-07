@@ -1,6 +1,6 @@
 import Chat from "@/components/Chat";
 import Redirect from "@/components/Redirect";
-import { withAuthGuard } from "../hocs/AuthGuard";
+import { withAuthGuard } from "../../hocs/AuthGuard";
 
 function ChatPage() {
     return (

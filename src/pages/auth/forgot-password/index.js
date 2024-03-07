@@ -2,7 +2,7 @@ import ForgotPassword from "@/components/Authentication/ForgotPassword";
 import Success from "@/components/Authentication/Success";
 import { STEP } from "@/components/Authentication/constants";
 import Redirect from "@/components/Redirect";
-import { withAuthGuard } from "@/pages/hocs/AuthGuard";
+import { withAuthGuard } from "@/hocs/AuthGuard";
 import { useState } from "react";
 
 function ForgotPasswordPage() {
