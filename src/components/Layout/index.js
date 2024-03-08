@@ -16,10 +16,14 @@ import {
     User,
 } from "@nextui-org/react";
 import clsx from "clsx";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+
+const title = "ChatRoom | Random Chat With Your Soul Mate";
+const desc = "Quick match your soul math, and chat with";
 
 LoginPane.propTypes = {
     className: PropTypes.string,
@@ -114,6 +118,25 @@ function Layout({ children }) {
 
     return (
         <div className="min-h-screen bg-[#ffffff]">
+            <Head>
+                <title>{title}</title>
+                <meta name="description" content={desc} />
+
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={desc} />
+                <meta property="og:image" content="/logo.png" />
+                <meta property="og:type" content="website" />
+                <meta
+                    property="og:url"
+                    content="https://chatroom.guychienll.dev/"
+                />
+
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:site" content="@guychienll" />
+                <meta name="twitter:title" content={title} />
+                <meta name="twitter:description" content={desc} />
+                <meta name="twitter:image" content="/logo.png" />
+            </Head>
             <Navbar
                 isBlurred
                 isMenuOpen={isMenuOpen}
