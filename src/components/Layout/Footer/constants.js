@@ -21,11 +21,31 @@ const LANGS = [
 ];
 
 const SOCIALS = [
-    { name: "Twitter", href: "/", icon: <FaSquareXTwitter size={24} /> },
-    { name: "Linkedin", href: "/", icon: <IoLogoLinkedin size={24} /> },
-    { name: "Github", href: "/", icon: <IoLogoGithub size={24} /> },
-    { name: "Instagram", href: "/", icon: <IoLogoInstagram size={24} /> },
-    { name: "Website", href: "/", icon: <IoMdGlobe size={24} /> },
+    {
+        name: "Twitter",
+        href: "https://twitter.com/guychienll",
+        icon: <FaSquareXTwitter size={24} />,
+    },
+    {
+        name: "Linkedin",
+        href: "https://www.linkedin.com/in/guy-chien-0566b61b9/",
+        icon: <IoLogoLinkedin size={24} />,
+    },
+    {
+        name: "Github",
+        href: "https://github.com/guychienll/",
+        icon: <IoLogoGithub size={24} />,
+    },
+    {
+        name: "Instagram",
+        href: "https://www.instagram.com/_chienli_/",
+        icon: <IoLogoInstagram size={24} />,
+    },
+    {
+        name: "Website",
+        href: "https://www.guychienll.dev/",
+        icon: <IoMdGlobe size={24} />,
+    },
 ];
 
 export { LANGS, QUICK_LINKS, SOCIALS };
