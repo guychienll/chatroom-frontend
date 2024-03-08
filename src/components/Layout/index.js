@@ -97,6 +97,13 @@ function Layout({ children }) {
                 router.push("/chat");
             },
         },
+        {
+            key: "about",
+            label: "關於我們",
+            action: async () => {
+                router.push("/about");
+            },
+        },
     ];
 
     useEffect(() => {
@@ -159,6 +166,11 @@ function Layout({ children }) {
                     <NavbarItem isActive={router.pathname === "/chat"}>
                         <Link className="text-danger" href="/chat">
                             聊天室
+                        </Link>
+                    </NavbarItem>
+                    <NavbarItem isActive={router.pathname === "/about"}>
+                        <Link className="text-danger" href="/about">
+                            關於我們
                         </Link>
                     </NavbarItem>
                 </NavbarContent>

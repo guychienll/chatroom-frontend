@@ -9,7 +9,7 @@ import {
 const QUICK_LINKS = [
     { name: "首頁", href: "/" },
     { name: "聊天室", href: "/chat" },
-    { name: "關於我們", href: "/" },
+    { name: "關於我們", href: "/about" },
     { name: "聯繫我們", href: "/" },
 ];
 
