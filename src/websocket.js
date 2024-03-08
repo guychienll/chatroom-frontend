@@ -1,3 +1,5 @@
+import CONFIG from "./config";
+
 class WSocket {
     ws = null;
 
@@ -7,7 +9,7 @@ class WSocket {
 
     static getInstance() {
         if (!this.ws) {
-            this.ws = new WebSocket("ws://localhost:8000/ws");
+            this.ws = new WebSocket(`${CONFIG.WEBSOCKET_HOST}/ws`);
             this.#onopen();
             this.#onclose();
         }
