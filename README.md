@@ -52,3 +52,4 @@ npm run build
 -   WebSocket
 -   File Upload Integration (AWS S3)
 -   Firebase Firestore Integration
+-   fly.io deployment and dns CNAME setting custom domain
