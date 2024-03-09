@@ -23,9 +23,6 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-const title = "ChatRoom | Random Chat With Your Soul Mate";
-const desc = "Quick match your soul math, and chat with";
-
 LoginPane.propTypes = {
     className: PropTypes.string,
     onClick: PropTypes.func,
