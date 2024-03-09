@@ -1,8 +1,13 @@
 import { Chip } from "@nextui-org/react";
+import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { MdCheckCircleOutline, MdErrorOutline } from "react-icons/md";
+import { useIntl } from "react-intl";
 
 export const useYupForm = (initialValues, schema) => {
+    const router = useRouter();
+    const intl = useIntl();
+    const t = intl.messages[router.locale];
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState([]);
 
@@ -48,7 +53,7 @@ export const useYupForm = (initialValues, schema) => {
                     return (
                         <Chip
                             color={isValid ? "success" : "danger"}
-                            className="mr-1 text-white"
+                            className="mb-1 mr-1 text-white"
                             variant="solid"
                             startContent={
                                 isValid ? (
@@ -59,7 +64,7 @@ export const useYupForm = (initialValues, schema) => {
                             }
                             key={options.message}
                         >
-                            {options.message}
+                            {t[options.message]}
                         </Chip>
                     );
                 })}

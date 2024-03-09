@@ -10,9 +10,11 @@ import {
     Spinner,
     User,
 } from "@nextui-org/react";
+import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
+import { useIntl } from "react-intl";
 import { STEP } from "./constants";
 
 WaitingRoom.propTypes = {
@@ -24,6 +26,9 @@ function WaitingRoom({ step, setStep }) {
     const profile = useUserStore((state) => state.profile);
     const [isLoading, setIsLoading] = useState(false);
     const [rooms, setRooms] = useState([]);
+    const router = useRouter();
+    const intl = useIntl();
+    const t = intl.messages[router.locale];
 
     useEffect(() => {
         (async () => {
@@ -140,7 +145,7 @@ function WaitingRoom({ step, setStep }) {
                     color="danger"
                     variant="ghost"
                 >
-                    聊天
+                    {t["match_button"]}
                 </Button>
             </CardFooter>
         </>

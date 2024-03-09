@@ -1,4 +1,6 @@
 import { Card, CardHeader, Chip, Image } from "@nextui-org/react";
+import { useRouter } from "next/router";
+import { useIntl } from "react-intl";
 
 const LEARNINGS = [
     "Node.js",
@@ -20,18 +22,19 @@ const LEARNINGS = [
 ];
 
 function About() {
+    const router = useRouter();
+    const intl = useIntl();
+    const t = intl.messages[router.locale];
     return (
         <div className="min-h-[calc(100dvh-4rem)] bg-[#F7F6F2] px-4 py-6">
             <div className="content ml-auto mr-auto max-w-[1296px]">
                 <div className="section flex flex-col pt-12 md:flex-row">
                     <div className="my-1 flex-1 px-2 md:px-8">
                         <div className="title mb-4 text-5xl font-bold tracking-wider text-danger">
-                            關於 ChatRoom
+                            {t["about_section_1_title"]}
                         </div>
                         <p className=" text-large leading-8 ">
-                            ChatRoom
-                            是一個匿名聊天室，你可以在這裡和陌生人聊天，透過隨機配對的方式，讓你有機會認識不同的人。
-                            你可以選擇是否匿名，保護你的隱私，並且保留聊天記錄，讓你可以找回心儀的對象。
+                            {t["about_section_1_description"]}
                         </p>
                     </div>
                     <div className="flex-1 px-2 md:px-8">
@@ -41,10 +44,10 @@ function About() {
                 <div className="section flex flex-col justify-evenly pt-12 md:flex-row-reverse">
                     <div className="my-1 flex-1 px-2 md:px-8">
                         <div className="title mb-4 flex-1 text-5xl font-bold tracking-wider text-danger">
-                            開發者
+                            {t["about_section_2_title"]}
                         </div>
-                        <p className="text-large leading-8 ">
-                            透過 ChatRoom 開發，學習並且熟練如何使用以下技術
+                        <div className="text-large leading-8 ">
+                            {t["about_section_2_description_1"]}
                             <div className="flex flex-wrap">
                                 {LEARNINGS.map((learning) => (
                                     <Chip
@@ -57,8 +60,9 @@ function About() {
                                     </Chip>
                                 ))}
                             </div>
-                            並且透過這個專案，學習如何開發一個完整的應用程式。
-                        </p>
+
+                            {t["about_section_2_description_2"]}
+                        </div>
                     </div>
                     <div className="flex flex-1 justify-center px-2 md:px-8">
                         <Card className="max-w-[300px]">

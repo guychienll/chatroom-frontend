@@ -7,17 +7,17 @@ import {
 } from "react-icons/io";
 
 const QUICK_LINKS = [
-    { name: "首頁", href: "/" },
-    { name: "聊天室", href: "/chat" },
-    { name: "關於我們", href: "/about" },
-    { name: "聯繫我們", href: "/" },
+    { name: "quick_link_home", href: "/" },
+    { name: "quick_link_chat", href: "/chat" },
+    { name: "quick_link_about", href: "/about" },
+    { name: "quick_link_contact", href: "/" },
 ];
 
 const LANGS = [
-    { name: "中文", href: "/" },
-    { name: "English", href: "/" },
-    { name: "日本語", href: "/" },
-    { name: "한국어", href: "/" },
+    { name: "中文", href: "/", locale: "zh-TW" },
+    { name: "English", href: "/", locale: "en" },
+    { name: "日本語", href: "/", locale: "jp" },
+    { name: "한국어", href: "/", locale: "kr" },
 ];
 
 const SOCIALS = [

@@ -1,15 +1,23 @@
 import { object, string } from "yup";
 
-const Email = string().required("請填入信箱").email("請填入合法信箱");
-const Password = string().required("請填入密碼").min(8, "密碼至少 8 位");
+const Email = string()
+    .required("validation_required")
+    .email("validation_email");
+
+const Password = string()
+    .required("validation_required")
+    .min(8, "validation_more_than_8");
+
 const PasswordConfirm = string().test(
-    "password confirm",
-    "密碼不一致",
+    "password-match",
+    "validation_password_match",
     function (value) {
         return this.parent.password === value;
     },
 );
-const Otp = string().required("請填入驗證碼").length(6, "驗證碼為 6 位數");
+const Otp = string()
+    .required("validation_required")
+    .length(6, "validation_6_digits");
 
 const QuickRegisterFormSchema = object({
     email: Email,

@@ -1,6 +1,8 @@
 import clsx from "clsx";
-import PropTypes from "prop-types";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
 
 LinkList.propTypes = {
     className: PropTypes.string,
@@ -13,6 +15,9 @@ LinkList.propTypes = {
 };
 
 function LinkList({ items = [], className }) {
+    const router = useRouter();
+    const intl = useIntl();
+    const t = intl.messages[router.locale];
     return (
         <ul className={clsx({}, className)}>
             {items.map((link) => (
@@ -20,8 +25,9 @@ function LinkList({ items = [], className }) {
                     <Link
                         href={link.href || "#"}
                         className="flex items-center hover:text-danger"
+                        locale={link.locale || router.locale}
                     >
-                        {link.icon || link.name}
+                        {link.icon || t[link.name] || link.name}
                     </Link>
                 </li>
             ))}

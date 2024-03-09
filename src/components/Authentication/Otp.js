@@ -12,8 +12,10 @@ import {
     Input,
     Progress,
 } from "@nextui-org/react";
+import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { useCallback, useState } from "react";
+import { useIntl } from "react-intl";
 
 Otp.propTypes = {
     goTo: PropTypes.func,
@@ -37,6 +39,9 @@ function Otp(props) {
         },
         OtpFormSchema,
     );
+    const router = useRouter();
+    const intl = useIntl();
+    const t = intl.messages[router.locale];
 
     const onTimeIsUp = useCallback(() => {
         onValueChange("validation")("");
@@ -89,8 +94,8 @@ function Otp(props) {
                 <Input
                     disabled={remainSec}
                     color={remainSec ? "default" : "primary"}
-                    label="帳號"
-                    placeholder="請輸入註冊信箱"
+                    label={t["email"]}
+                    placeholder={t["email_placeholder"]}
                     name="username"
                     type="email"
                     onValueChange={onValueChange("username")}
@@ -102,8 +107,8 @@ function Otp(props) {
                         disabled={!remainSec}
                         color={remainSec ? "primary" : "default"}
                         maxLength={6}
-                        label="驗證碼"
-                        placeholder="請輸入 6 位驗證碼"
+                        label={t["otp"]}
+                        placeholder={t["otp_placeholder"]}
                         name="validation"
                         type="text"
                         onValueChange={onValueChange("validation")}
@@ -132,7 +137,7 @@ function Otp(props) {
                         variant="solid"
                         onClick={handleValidate}
                     >
-                        前往註冊
+                        {t["go_to_register_button"]}
                     </Button>
                 ) : (
                     <Button
@@ -144,7 +149,7 @@ function Otp(props) {
                         variant="solid"
                         onClick={handleSendValidationMail}
                     >
-                        寄送驗證信
+                        {t["send_otp_button"]}
                     </Button>
                 )}
             </CardBody>

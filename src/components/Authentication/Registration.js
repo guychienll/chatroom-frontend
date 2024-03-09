@@ -4,8 +4,10 @@ import Logo from "@/components/Logo";
 import { RegistrationFormSchema } from "@/helper/validate";
 import { useYupForm } from "@/hook/useYupForm";
 import { Button, Card, CardBody, CardHeader, Input } from "@nextui-org/react";
+import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { useIntl } from "react-intl";
 
 Registration.propTypes = {
     username: PropTypes.string,
@@ -22,6 +24,9 @@ function Registration(props) {
         },
         RegistrationFormSchema,
     );
+    const router = useRouter();
+    const intl = useIntl();
+    const t = intl.messages[router.locale];
     const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = async (e) => {
@@ -53,7 +58,8 @@ function Registration(props) {
                     <Input
                         disabled
                         color="default"
-                        label="帳號"
+                        label={t["email"]}
+                        placeholder={t["email_placeholder"]}
                         name="username"
                         type="text"
                         onValueChange={onValueChange("username")}
@@ -63,8 +69,8 @@ function Registration(props) {
                     {renderValidatorChips("username")}
                     <Input
                         color="primary"
-                        label="密碼"
-                        placeholder="請輸入使用者密碼"
+                        label={t["password"]}
+                        placeholder={t["password_placeholder"]}
                         name="password"
                         type="password"
                         autoComplete="new-password"
@@ -74,8 +80,8 @@ function Registration(props) {
                     <Input
                         color="primary"
                         className="mb-2"
-                        label="確認密碼"
-                        placeholder="請再次輸入密碼"
+                        label={t["password_confirm"]}
+                        placeholder={t["password_confirm_placeholder"]}
                         name="confirm"
                         type="password"
                         autoComplete="new-password"
@@ -89,7 +95,7 @@ function Registration(props) {
                         color="danger"
                         variant="solid"
                     >
-                        註冊
+                        {t["register_button"]}
                     </Button>
                 </form>
             </CardBody>

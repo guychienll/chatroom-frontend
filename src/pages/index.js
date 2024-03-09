@@ -10,41 +10,13 @@ import {
 } from "react-icons/bs";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import { RiChatPrivateFill } from "react-icons/ri";
-
-const FEATURES = [
-    {
-        title: "可選匿名",
-        description: "可自由選擇是否匿名\n保護你的隱私",
-        icon: <RiChatPrivateFill className="text-danger-300" size={120} />,
-    },
-    {
-        title: "隨機配對",
-        description: "主打隨機配對\n讓你有機會認識不同的人",
-        icon: (
-            <GiPerspectiveDiceSixFacesRandom
-                className="text-danger-300"
-                size={120}
-            />
-        ),
-    },
-    {
-        title: "聊天記錄",
-        description: "保留聊天記錄\n找回心儀的對象",
-        icon: (
-            <BsFillChatSquareHeartFill className="text-danger-300" size={120} />
-        ),
-    },
-    {
-        title: "已讀回報",
-        description: "已讀回報\n讓你不會痴心空等",
-        icon: (
-            <BsFillChatSquareDotsFill className="text-danger-300" size={120} />
-        ),
-    },
-];
+import { useIntl } from "react-intl";
 
 function Home() {
     const router = useRouter();
+    const intl = useIntl();
+    const t = intl.messages[router.locale];
+
     const [values, setValues] = useState({
         email: "",
     });
@@ -64,20 +36,60 @@ function Home() {
         }
     };
 
+    const FEATURES = [
+        {
+            title: t["feature_1_title"],
+            description: t["feature_1_description"],
+            icon: <RiChatPrivateFill className="text-danger-300" size={120} />,
+        },
+        {
+            title: t["feature_2_title"],
+            description: t["feature_2_description"],
+            icon: (
+                <GiPerspectiveDiceSixFacesRandom
+                    className="text-danger-300"
+                    size={120}
+                />
+            ),
+        },
+        {
+            title: t["feature_3_title"],
+            description: t["feature_3_description"],
+            icon: (
+                <BsFillChatSquareHeartFill
+                    className="text-danger-300"
+                    size={120}
+                />
+            ),
+        },
+        {
+            title: t["feature_4_title"],
+            description: t["feature_4_description"],
+            icon: (
+                <BsFillChatSquareDotsFill
+                    className="text-danger-300"
+                    size={120}
+                />
+            ),
+        },
+    ];
+
     return (
         <div className="min-h-[calc(100dvh-4rem)] bg-[#F7F6F2] px-4 py-6">
             <div className="content ml-auto mr-auto max-w-[1296px]">
                 <div className="flex flex-col-reverse items-center justify-between px-8 md:flex-row md:px-20">
                     <div className="flex flex-col gap-y-8">
                         <div className="flex flex-col flex-wrap items-center gap-4 md:flex-row md:items-start">
-                            <Chip>相遇</Chip>
-                            <Chip>相知</Chip>
-                            <Chip>相連</Chip>
+                            <Chip>{t["hero_chip_1"]}</Chip>
+                            <Chip>{t["hero_chip_2"]}</Chip>
+                            <Chip>{t["hero_chip_3"]}</Chip>
                         </div>
                         <div className="flex flex-col items-center gap-y-8 text-xl md:items-start md:text-3xl">
-                            <h3>在這裡</h3>
-                            <h3>每個笑容都有其故事</h3>
-                            <h3 className="text-danger">開始你的愛情冒險</h3>
+                            <h3>{t["hero_slogan_1"]}</h3>
+                            <h3>{t["hero_slogan_2"]}</h3>
+                            <h3 className="text-danger">
+                                {t["hero_slogan_3"]}
+                            </h3>
                         </div>
                     </div>
                     <Image
@@ -92,15 +104,17 @@ function Home() {
                 <div className="join-us">
                     <div className="flex flex-col items-center gap-y-4 p-4 text-center md:p-12">
                         <h2 className="text-4xl font-bold text-danger">
-                            加入我們
+                            {t["join_us"]}
                         </h2>
-                        <p className="text-default-500">填入信箱即可註冊</p>
+                        <p className="text-default-500">
+                            {t["join_us_description"]}
+                        </p>
                         <Input
                             name="email"
-                            label="信箱"
+                            label={t["email"]}
                             className="max-w-96"
                             color="default"
-                            placeholder="請填入註冊信箱"
+                            placeholder={t["email_placeholder"]}
                             value={values.email}
                             isInvalid={!!errors.email}
                             onChange={(e) =>
@@ -117,7 +131,7 @@ function Home() {
                             variant="solid"
                             size="lg"
                         >
-                            開始配對
+                            {t["join_us_button"]}
                         </Button>
                     </div>
                 </div>

@@ -21,6 +21,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 
 const title = "ChatRoom | Random Chat With Your Soul Mate";
 const desc = "Quick match your soul math, and chat with";
@@ -32,6 +33,9 @@ LoginPane.propTypes = {
 function LoginPane({ className, onClick }) {
     const { profile, loading, cleanProfile } = useUserStore((state) => state);
     const router = useRouter();
+    const intl = useIntl();
+    const t = intl.messages[router.locale];
+
     return (
         <div className={clsx("", className)}>
             {profile ? (
@@ -57,7 +61,7 @@ function LoginPane({ className, onClick }) {
                         variant="ghost"
                         className="tracking-wider"
                     >
-                        登出
+                        {t["logout"]}
                     </Button>
                 </NavbarItem>
             ) : (
@@ -72,7 +76,7 @@ function LoginPane({ className, onClick }) {
                         variant="flat"
                         className="tracking-wider"
                     >
-                        登入 / 註冊
+                        {t["login_or_register"]}
                     </Button>
                 </NavbarItem>
             )}
@@ -88,18 +92,20 @@ function Layout({ children }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { setProfile, setLoading } = useUserStore((state) => state);
     const router = useRouter();
+    const intl = useIntl();
+    const t = intl.messages[router.locale];
 
     const MENU_ITEMS = [
         {
             key: "chat",
-            label: "聊天室",
+            label: t["navigation_link_chat"],
             action: async () => {
                 router.push("/chat");
             },
         },
         {
             key: "about",
-            label: "關於我們",
+            label: t["navigation_link_about"],
             action: async () => {
                 router.push("/about");
             },
@@ -126,11 +132,11 @@ function Layout({ children }) {
     return (
         <div className="min-h-screen bg-[#ffffff]">
             <Head>
-                <title>{title}</title>
-                <meta name="description" content={desc} />
+                <title>{t["title"]}</title>
+                <meta name="description" content={t["description"]} />
 
-                <meta property="og:title" content={title} />
-                <meta property="og:description" content={desc} />
+                <meta property="og:title" content={t["title"]} />
+                <meta property="og:description" content={t["description"]} />
                 <meta property="og:image" content="/logo.png" />
                 <meta property="og:type" content="website" />
                 <meta
@@ -140,8 +146,8 @@ function Layout({ children }) {
 
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:site" content="@guychienll" />
-                <meta name="twitter:title" content={title} />
-                <meta name="twitter:description" content={desc} />
+                <meta name="twitter:title" content={t["title"]} />
+                <meta name="twitter:description" content={t["description"]} />
                 <meta name="twitter:image" content="/logo.png" />
             </Head>
             <Navbar
@@ -165,12 +171,12 @@ function Layout({ children }) {
                 >
                     <NavbarItem isActive={router.pathname === "/chat"}>
                         <Link className="text-danger" href="/chat">
-                            聊天室
+                            {t["navigation_link_chat"]}
                         </Link>
                     </NavbarItem>
                     <NavbarItem isActive={router.pathname === "/about"}>
                         <Link className="text-danger" href="/about">
-                            關於我們
+                            {t["navigation_link_about"]}
                         </Link>
                     </NavbarItem>
                 </NavbarContent>

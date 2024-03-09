@@ -12,8 +12,10 @@ import {
     Input,
     Progress,
 } from "@nextui-org/react";
+import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { useCallback, useState } from "react";
+import { useIntl } from "react-intl";
 
 ForgotPassword.propTypes = {
     goTo: PropTypes.func,
@@ -38,6 +40,9 @@ function ForgotPassword(props) {
         },
         ForgotPasswordFormSchema,
     );
+    const router = useRouter();
+    const intl = useIntl();
+    const t = intl.messages[router.locale];
 
     const onTimeIsUp = useCallback(() => {
         onValueChange("validation")("");
@@ -94,8 +99,8 @@ function ForgotPassword(props) {
                 <Input
                     disabled={remainSec}
                     color={remainSec ? "default" : "primary"}
-                    label="帳號"
-                    placeholder="請輸入註冊信箱"
+                    label={t["email"]}
+                    placeholder={t["email_placeholder"]}
                     name="username"
                     type="email"
                     onValueChange={onValueChange("username")}
@@ -107,8 +112,8 @@ function ForgotPassword(props) {
                         disabled={!remainSec}
                         color={remainSec ? "primary" : "default"}
                         maxLength={6}
-                        label="驗證碼"
-                        placeholder="請輸入 6 位驗證碼"
+                        label={t["otp"]}
+                        placeholder={t["otp_placeholder"]}
                         name="validation"
                         type="text"
                         onValueChange={onValueChange("validation")}
@@ -130,8 +135,8 @@ function ForgotPassword(props) {
                 <Input
                     disabled={!remainSec}
                     color={remainSec ? "primary" : "default"}
-                    label="新密碼"
-                    placeholder="請輸入欲更改密碼"
+                    label={t["new_password"]}
+                    placeholder={t["new_password_placeholder"]}
                     name="password"
                     type="password"
                     autoComplete="new-password"
@@ -142,8 +147,8 @@ function ForgotPassword(props) {
                 <Input
                     disabled={!remainSec}
                     color={remainSec ? "primary" : "default"}
-                    label="確認密碼"
-                    placeholder="請再次輸入欲更改密碼"
+                    label={t["password_confirm"]}
+                    placeholder={t["password_confirm_placeholder"]}
                     name="confirm"
                     type="password"
                     autoComplete="new-password"
@@ -161,7 +166,7 @@ function ForgotPassword(props) {
                         variant="solid"
                         onClick={handleUpdatePassword}
                     >
-                        更改密碼
+                        {t["change_password_button"]}
                     </Button>
                 ) : (
                     <Button
@@ -173,7 +178,7 @@ function ForgotPassword(props) {
                         variant="solid"
                         onClick={handleGenerateOtp}
                     >
-                        寄送驗證信
+                        {t["send_otp_button"]}
                     </Button>
                 )}
             </CardBody>

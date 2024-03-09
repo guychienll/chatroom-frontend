@@ -13,8 +13,10 @@ import {
     SelectItem,
     Textarea,
 } from "@nextui-org/react";
+import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 
 ProfileEditor.propTypes = {
     username: PropTypes.string.isRequired,
@@ -34,6 +36,9 @@ function ProfileEditor(props) {
         gender: "",
         bio: "",
     });
+    const router = useRouter();
+    const intl = useIntl();
+    const t = intl.messages[router.locale];
 
     useEffect(() => {
         try {
@@ -109,8 +114,8 @@ function ProfileEditor(props) {
                     return (
                         <>
                             <ModalHeader className="flex flex-col text-center">
-                                <div className="text-2xl italic tracking-wide text-danger">
-                                    Profile
+                                <div className="text-2xl tracking-wide text-danger">
+                                    {t["profile_editor_title"]}
                                 </div>
                             </ModalHeader>
                             <ModalBody className="flex flex-col items-center">
@@ -131,9 +136,9 @@ function ProfileEditor(props) {
                                 <Input
                                     name="nickname"
                                     value={values.nickname}
-                                    label="暱稱"
+                                    label={t["nickname"]}
+                                    placeholder={t["nickname_placeholder"]}
                                     type="text"
-                                    placeholder="請輸入暱稱"
                                     autoComplete="nickname"
                                     onChange={handleChange}
                                     disabled={isReadOnly}
@@ -141,23 +146,23 @@ function ProfileEditor(props) {
                                 <Select
                                     name="gender"
                                     selectedKeys={[values.gender]}
-                                    label="生理性別"
-                                    placeholder="請選擇生理性別"
+                                    label={t["gender"]}
+                                    placeholder={t["gender_placeholder"]}
                                     className="max-w-xs opacity-100 disabled:bg-[#E4E4E7]"
                                     onChange={handleChange}
                                     isDisabled={isReadOnly}
                                 >
                                     {[
                                         {
-                                            label: "男",
+                                            label: t["male"],
                                             value: "male",
                                         },
                                         {
-                                            label: "女",
+                                            label: t["female"],
                                             value: "female",
                                         },
                                         {
-                                            label: "其他",
+                                            label: t["other"],
                                             value: "other",
                                         },
                                     ].map((item) => (
@@ -172,9 +177,9 @@ function ProfileEditor(props) {
                                 <Input
                                     name="birthday"
                                     value={values.birthday}
-                                    label="生日"
+                                    label={t["birthday"]}
+                                    placeholder={t["birthday_placeholder"]}
                                     type="date"
-                                    placeholder="請選擇生日"
                                     onChange={handleChange}
                                     disabled={isReadOnly}
                                 />
@@ -182,9 +187,9 @@ function ProfileEditor(props) {
                                 <Textarea
                                     name="bio"
                                     value={values.bio}
-                                    label="自我介紹"
+                                    label={t["bio"]}
+                                    placeholder={t["bio_placeholder"]}
                                     type="text"
-                                    placeholder="請輸入自我介紹"
                                     onChange={handleChange}
                                     disabled={isReadOnly}
                                 />
@@ -196,7 +201,7 @@ function ProfileEditor(props) {
                                         color="danger"
                                         onPress={handleSubmit}
                                     >
-                                        儲存
+                                        {t["save_button"]}
                                     </Button>
                                 </ModalFooter>
                             )}

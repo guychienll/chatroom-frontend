@@ -12,12 +12,17 @@ import {
     Input,
 } from "@nextui-org/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { useIntl } from "react-intl";
 import { useYupForm } from "../../hook/useYupForm";
 
 Login.propTypes = {};
 
 function Login() {
+    const router = useRouter();
+    const intl = useIntl();
+    const t = intl.messages[router.locale];
     const { values, isValid, onValueChange, renderValidatorChips } = useYupForm(
         {
             username: "",
@@ -58,8 +63,8 @@ function Login() {
                 <form onSubmit={onSubmit}>
                     <Input
                         color="primary"
-                        label="帳號"
-                        placeholder="請輸入註冊信箱"
+                        label={t["email"]}
+                        placeholder={t["email_placeholder"]}
                         name="username"
                         type="text"
                         onValueChange={onValueChange("username")}
@@ -69,9 +74,9 @@ function Login() {
                     {renderValidatorChips("username")}
                     <Input
                         color="primary"
-                        label="密碼"
+                        label={t["password"]}
+                        placeholder={t["password_placeholder"]}
                         autoComplete="current-password"
-                        placeholder="請輸入密碼"
                         name="password"
                         type="password"
                         onValueChange={onValueChange("password")}
@@ -85,7 +90,7 @@ function Login() {
                         color="danger"
                         variant="solid"
                     >
-                        登入
+                        {t["login_button"]}
                     </Button>
                 </form>
             </CardBody>
@@ -97,7 +102,7 @@ function Login() {
                     variant="flat"
                     className="mb-2 w-full bg-transparent"
                 >
-                    忘記密碼
+                    {t["forgot_password_button"]}
                 </Button>
                 <Button
                     as={Link}
@@ -106,7 +111,7 @@ function Login() {
                     variant="ghost"
                     className="w-full"
                 >
-                    前往註冊
+                    {t["go_to_register_button"]}
                 </Button>
             </CardFooter>
         </Card>
