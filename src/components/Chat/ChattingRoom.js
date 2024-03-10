@@ -5,7 +5,7 @@ import clsx from "clsx";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
-import { IoIosArrowBack, IoMdImages, IoMdSend } from "react-icons/io";
+import { IoIosArrowBack, IoMdImages } from "react-icons/io";
 import { v4 as uuid } from "uuid";
 import { MESSAGE_TYPE } from "./constants";
 
@@ -97,6 +97,7 @@ function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
                         <IoIosArrowBack size={18} />
                     </Button>
                     <Input
+                        inputMode="text"
                         ref={inputRef}
                         value={message}
                         onChange={(e) => {
@@ -121,17 +122,16 @@ function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
                     >
                         <IoMdImages size={18} />
                     </Button>
-                    <Button
+                    <button
                         type="button"
                         onTouchEnd={(e) => {
                             e.preventDefault();
                             sendMessage(e);
                         }}
-                        isIconOnly
-                        color="primary"
+                        className="min-h-[40px] min-w-[60px] rounded-large bg-primary text-white transition-background active:bg-primary-200 active:text-white"
                     >
-                        <IoMdSend size={18} />
-                    </Button>
+                        送出
+                    </button>
                 </form>
             </div>
         </>
