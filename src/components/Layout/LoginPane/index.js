@@ -1,6 +1,6 @@
 import * as authApi from "@/api/Auth";
 import useUserStore from "@/stores/user";
-import { Button, NavbarItem, User } from "@nextui-org/react";
+import { Button, NavbarItem } from "@nextui-org/react";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
@@ -21,13 +21,6 @@ function LoginPane({ className, onClick }) {
         <div className={clsx("", className)}>
             {profile ? (
                 <NavbarItem className="flex animate-appearance-in gap-x-4">
-                    <User
-                        name={
-                            profile.nickname || profile.username.split("@")[0]
-                        }
-                        description={profile.username}
-                        avatarProps={{ size: "sm", src: profile.avatar }}
-                    />
                     <Button
                         onClick={async () => {
                             await authApi.logout();
