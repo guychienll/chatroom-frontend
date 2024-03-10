@@ -150,10 +150,10 @@ function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
                         <IoMdImages size={18} />
                     </Button>
                     <Button
-                        onPress={(e) => {
+                        onPressUp={(e) => {
                             e.preventDefault();
-                            onSendMessage(e);
                         }}
+                        type="submit"
                         isIconOnly
                         color="primary"
                     >
