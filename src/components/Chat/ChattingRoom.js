@@ -148,7 +148,8 @@ function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
                     </Button>
                     <Button
                         type="button"
-                        onPressStart={(e) => {
+                        onPressEnd={(e) => {
+                            e.preventDefault();
                             onSendMessage(e);
                         }}
                         isIconOnly
