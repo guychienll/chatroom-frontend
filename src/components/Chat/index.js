@@ -38,7 +38,7 @@ const Chat = () => {
                                 left: 0,
                                 behavior: "smooth",
                             });
-                        }, 0);
+                        }, 100);
                         break;
                     case CLIENT_HANDLE_ACTIONS.JOINED_ROOM:
                         setStep(STEP.JOINED_ROOM);
