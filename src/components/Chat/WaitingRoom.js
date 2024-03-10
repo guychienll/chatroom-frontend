@@ -87,7 +87,7 @@ function WaitingRoom({ step, setStep }) {
 
     return (
         <>
-            <CardBody className="flex h-[400px] max-h-[400px] w-[300px] flex-col">
+            <CardBody className="flex h-full w-[300px] flex-col">
                 {isLoading && (
                     <div className="flex items-center justify-center">
                         <Spinner />

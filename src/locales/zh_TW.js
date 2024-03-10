@@ -70,6 +70,7 @@ const Translation = {
     send_otp_button: "發送驗證碼",
     success: "成功",
     go_to_login_button: "前往登入",
+    login_title: "登入",
 
     //form - profile
     profile_editor_title: "編輯個人資料",

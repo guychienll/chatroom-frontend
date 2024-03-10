@@ -1,11 +1,4 @@
-import Logo from "@/components/Logo";
-import {
-    Button,
-    Card,
-    CardBody,
-    CardFooter,
-    CardHeader,
-} from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter } from "@nextui-org/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
@@ -19,10 +12,6 @@ function Success() {
     const t = intl.messages[router.locale];
     return (
         <Card radius="lg" className="w-[300px] transition-height">
-            <CardHeader className="flex justify-center">
-                <Logo className="text-2xl" />
-            </CardHeader>
-
             <CardBody className="flex flex-col items-center gap-y-4">
                 <IoCheckmarkDoneCircle
                     size={72}

@@ -4,7 +4,7 @@ import { withAuthGuard } from "../../hocs/AuthGuard";
 
 function ChatPage() {
     return (
-        <div className="flex h-[calc(100dvh-4rem)] w-full items-center justify-center">
+        <div className="flex h-[calc(100dvh-4rem)] w-full items-start justify-center py-4">
             <Chat />
         </div>
     );

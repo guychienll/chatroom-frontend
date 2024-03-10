@@ -27,17 +27,18 @@ const Chat = () => {
             const instance = WS.getInstance();
             instance.ws.onmessage = (e) => {
                 const _data = JSON.parse(e.data);
-                console.info("receive event:", _data.action, _data.payload);
                 switch (_data.action) {
                     case CLIENT_HANDLE_ACTIONS.RECEIVE_MESSAGE:
                         setMessages((prev) => {
+                            return [...prev, _data.payload];
+                        });
+                        setTimeout(() => {
                             scrollRef.current.scroll({
                                 top: scrollRef.current.scrollHeight,
                                 left: 0,
                                 behavior: "smooth",
                             });
-                            return [...prev, _data.payload];
-                        });
+                        }, 0);
                         break;
                     case CLIENT_HANDLE_ACTIONS.JOINED_ROOM:
                         setStep(STEP.JOINED_ROOM);
@@ -72,7 +73,7 @@ const Chat = () => {
                 onOpenChange={onProfileEditorOpenChange}
                 uploadFile={handleUploadFile}
             />
-            <Card className="max-w-[300px] md:max-w-[500px]">
+            <Card className="h-[calc(100%-64px)] max-h-[calc(100%-64px)]">
                 <CardHeader className="flex justify-between">
                     <User
                         name={profile.nickname || profile.username}

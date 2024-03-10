@@ -1,9 +1,8 @@
 import { register } from "@/api/Auth";
 import { STEP } from "@/components/Authentication/constants";
-import Logo from "@/components/Logo";
 import { RegistrationFormSchema } from "@/helper/validate";
 import { useYupForm } from "@/hook/useYupForm";
-import { Button, Card, CardBody, CardHeader, Input } from "@nextui-org/react";
+import { Button, Card, CardBody, Input } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { useState } from "react";
@@ -50,9 +49,6 @@ function Registration(props) {
 
     return (
         <Card radius="lg" className="w-[300px] transition-height">
-            <CardHeader className="flex justify-center">
-                <Logo className="text-2xl" />
-            </CardHeader>
             <CardBody>
                 <form onSubmit={onSubmit}>
                     <Input

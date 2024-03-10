@@ -89,7 +89,7 @@ function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
             />
             <CardBody
                 ref={scrollRef}
-                className="flex h-[400px] max-h-[400px] w-full  flex-col overflow-y-auto overflow-x-hidden pb-12 scrollbar-hide"
+                className="flex w-full flex-col overflow-y-auto overflow-x-hidden scrollbar-hide"
             >
                 {messages.map((msg) => (
                     <MessageBubble
@@ -100,7 +100,7 @@ function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
                     />
                 ))}
             </CardBody>
-            <div className="fixed bottom-0 left-0 w-full px-4 py-2">
+            <div className="fixed bottom-0 left-0 z-50 w-full bg-white px-4 py-2">
                 <form
                     onSubmit={onSendMessage}
                     className="flex flex-grow flex-row items-center gap-2"

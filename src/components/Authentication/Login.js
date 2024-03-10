@@ -1,16 +1,8 @@
 import * as authApi from "@/api/Auth";
 import * as userApi from "@/api/User";
-import Logo from "@/components/Logo";
 import { LoginFormSchema } from "@/helper/validate";
 import useUserStore from "@/stores/user";
-import {
-    Button,
-    Card,
-    CardBody,
-    CardFooter,
-    CardHeader,
-    Input,
-} from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter, Input } from "@nextui-org/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -55,10 +47,7 @@ function Login() {
     };
 
     return (
-        <Card radius="lg" className="w-[300px] transition-height">
-            <CardHeader className="flex justify-center">
-                <Logo className="text-2xl" />
-            </CardHeader>
+        <Card radius="lg" className="w-[300px]">
             <CardBody>
                 <form onSubmit={onSubmit}>
                     <Input

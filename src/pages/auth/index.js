@@ -25,7 +25,7 @@ function AuthPage() {
     };
 
     return (
-        <div className="flex h-[calc(100dvh-4rem)] w-full items-center justify-center">
+        <div className="flex  h-[calc(100dvh-4rem)] items-center justify-center">
             {step === STEP.LOGIN && <Login goTo={goTo} />}
             {step === STEP.OTP && <Otp goTo={goTo} />}
             {step === STEP.SUCCESS && <Success goTo={goTo} />}

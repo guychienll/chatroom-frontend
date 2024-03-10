@@ -1,17 +1,9 @@
 import * as authApi from "@/api/Auth";
 import { STEP } from "@/components/Authentication/constants";
-import Logo from "@/components/Logo";
 import { OtpFormSchema } from "@/helper/validate";
 import useCountDownTimer from "@/hook/useCountDownTimer";
 import { useYupForm } from "@/hook/useYupForm";
-import {
-    Button,
-    Card,
-    CardBody,
-    CardHeader,
-    Input,
-    Progress,
-} from "@nextui-org/react";
+import { Button, Card, CardBody, Input, Progress } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { useCallback, useState } from "react";
@@ -87,9 +79,6 @@ function Otp(props) {
 
     return (
         <Card radius="lg" className="w-[300px] transition-height">
-            <CardHeader className="flex justify-center">
-                <Logo className="text-2xl" />
-            </CardHeader>
             <CardBody className="flex flex-col">
                 <Input
                     disabled={remainSec}

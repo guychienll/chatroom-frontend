@@ -68,19 +68,20 @@ function Layout({ children }) {
     }, [setLoading, setProfile]);
 
     return (
-        <div className="min-h-screen bg-[#ffffff]">
+        <div className="bg-[#ffffff]">
             <Header />
             <Navbar
                 isBlurred
                 isMenuOpen={isMenuOpen}
                 onMenuOpenChange={setIsMenuOpen}
+                className="sticky flex items-center"
             >
                 <NavbarMenuToggle
                     aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
-                    className="sm:hidden"
+                    className="absolute left-4 sm:hidden"
                     color="danger"
                 />
-                <NavbarBrand>
+                <NavbarBrand className="flex justify-center md:justify-start">
                     <Link href="/">
                         <Logo className="text-2xl" />
                     </Link>
@@ -144,6 +145,7 @@ function isShowFooter(router) {
         "/auth",
         "/auth/login",
         "/auth/register",
+        "/auth/forgot-password",
     ];
     return EXCLUDE_FOOTER_PATHS.every((path) => path !== router.pathname);
 }

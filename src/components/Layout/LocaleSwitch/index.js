@@ -17,7 +17,9 @@ export function LocaleSwitch() {
     return (
         <Dropdown>
             <DropdownTrigger>
-                <Button variant="bordered">{t["language_switch"]}</Button>
+                <Button color="danger" variant="bordered">
+                    {t["language_switch"]}
+                </Button>
             </DropdownTrigger>
             <DropdownMenu aria-label="Dynamic Actions" items={LOCALES}>
                 {(item) => (

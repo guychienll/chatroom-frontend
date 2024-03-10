@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 function Header() {
@@ -7,9 +8,21 @@ function Header() {
     const intl = useIntl();
     const t = intl.messages[router.locale];
 
+    useEffect(() => {
+        document.addEventListener("gesturestart", function (e) {
+            e.preventDefault();
+        });
+    }, []);
+
     return (
         <Head>
             <title>{t["title"]}</title>
+
+            <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+            />
+
             <meta name="description" content={t["description"]} />
 
             <meta property="og:title" content={t["title"]} />
