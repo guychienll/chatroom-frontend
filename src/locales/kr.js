@@ -25,6 +25,7 @@ const Translation = {
     logout: "로그아웃",
     navigation_link_chat: "채팅방",
     navigation_link_about: "우리에 대해",
+    language_switch: "언어 전환",
     // header
     title: "ChatRoom | 랜덤 매칭 채팅방",
     description: "당신의 소울메이트와 빠르게 매칭하고 채팅하세요",

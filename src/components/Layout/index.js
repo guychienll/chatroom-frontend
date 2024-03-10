@@ -1,6 +1,8 @@
-import * as authApi from "@/api/Auth";
 import * as userApi from "@/api/User";
 import Footer from "@/components/Layout/Footer";
+import Header from "@/components/Layout/Header";
+import { LocaleSwitch } from "@/components/Layout/LocaleSwitch";
+import LoginPane from "@/components/Layout/LoginPane";
 import Logo from "@/components/Logo";
 import { delay } from "@/helper/time";
 import useUserStore from "@/stores/user";
@@ -13,73 +15,12 @@ import {
     NavbarMenu,
     NavbarMenuItem,
     NavbarMenuToggle,
-    User,
 } from "@nextui-org/react";
-import clsx from "clsx";
-import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-
-LoginPane.propTypes = {
-    className: PropTypes.string,
-    onClick: PropTypes.func,
-};
-function LoginPane({ className, onClick }) {
-    const { profile, loading, cleanProfile } = useUserStore((state) => state);
-    const router = useRouter();
-    const intl = useIntl();
-    const t = intl.messages[router.locale];
-
-    return (
-        <div className={clsx("", className)}>
-            {profile ? (
-                <NavbarItem className="flex animate-appearance-in gap-x-4">
-                    <User
-                        name={
-                            profile.nickname || profile.username.split("@")[0]
-                        }
-                        description={profile.username}
-                        avatarProps={{
-                            size: "sm",
-                            src: profile.avatar,
-                        }}
-                    />
-                    <Button
-                        onClick={async () => {
-                            await authApi.logout();
-                            await router.push("/");
-                            cleanProfile();
-                            onClick && onClick();
-                        }}
-                        color="danger"
-                        variant="ghost"
-                        className="tracking-wider"
-                    >
-                        {t["logout"]}
-                    </Button>
-                </NavbarItem>
-            ) : (
-                <NavbarItem>
-                    <Button
-                        onClick={async () => {
-                            await router.push("/auth");
-                            onClick && onClick();
-                        }}
-                        isLoading={loading}
-                        color="danger"
-                        variant="flat"
-                        className="tracking-wider"
-                    >
-                        {t["login_or_register"]}
-                    </Button>
-                </NavbarItem>
-            )}
-        </div>
-    );
-}
 
 Layout.propTypes = {
     children: PropTypes.node.isRequired,
@@ -128,25 +69,7 @@ function Layout({ children }) {
 
     return (
         <div className="min-h-screen bg-[#ffffff]">
-            <Head>
-                <title>{t["title"]}</title>
-                <meta name="description" content={t["description"]} />
-
-                <meta property="og:title" content={t["title"]} />
-                <meta property="og:description" content={t["description"]} />
-                <meta property="og:image" content="/logo.png" />
-                <meta property="og:type" content="website" />
-                <meta
-                    property="og:url"
-                    content="https://chatroom.guychienll.dev/"
-                />
-
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:site" content="@guychienll" />
-                <meta name="twitter:title" content={t["title"]} />
-                <meta name="twitter:description" content={t["description"]} />
-                <meta name="twitter:image" content="/logo.png" />
-            </Head>
+            <Header />
             <Navbar
                 isBlurred
                 isMenuOpen={isMenuOpen}
@@ -178,10 +101,11 @@ function Layout({ children }) {
                     </NavbarItem>
                 </NavbarContent>
                 <NavbarContent className="hidden gap-4 sm:flex" justify="end">
+                    <LocaleSwitch />
                     <LoginPane />
                 </NavbarContent>
 
-                <NavbarMenu>
+                <NavbarMenu className="flex flex-col py-4">
                     {MENU_ITEMS.map((item) => (
                         <NavbarMenuItem key={item.key}>
                             <Button
@@ -204,12 +128,24 @@ function Layout({ children }) {
                             setIsMenuOpen(false);
                         }}
                     />
+                    <div className="flex-1"></div>
+                    <LocaleSwitch />
                 </NavbarMenu>
             </Navbar>
             <main className="min-h-[calc(100dvh-4rem)]">{children}</main>
-            <Footer />
+            {isShowFooter(router) && <Footer />}
         </div>
     );
+}
+
+function isShowFooter(router) {
+    const EXCLUDE_FOOTER_PATHS = [
+        "/chat",
+        "/auth",
+        "/auth/login",
+        "/auth/register",
+    ];
+    return EXCLUDE_FOOTER_PATHS.every((path) => path !== router.pathname);
 }
 
 export default Layout;

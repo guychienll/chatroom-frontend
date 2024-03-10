@@ -24,6 +24,7 @@ const Translation = {
     logout: "ログアウト",
     navigation_link_chat: "チャットルーム",
     navigation_link_about: "私たちについて",
+    language_switch: "言語切り替え",
     // header
     title: "ChatRoom | ランダムマッチングチャットルーム",
     description:

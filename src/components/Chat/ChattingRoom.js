@@ -4,8 +4,6 @@ import {
     Avatar,
     Button,
     CardBody,
-    CardFooter,
-    Divider,
     Image,
     Input,
     useDisclosure,
@@ -102,8 +100,7 @@ function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
                     />
                 ))}
             </CardBody>
-            <Divider />
-            <CardFooter>
+            <div className="fixed bottom-0 left-0 w-full px-4 py-2">
                 <form
                     onSubmit={onSendMessage}
                     className="flex flex-grow flex-row items-center gap-2"
@@ -143,7 +140,7 @@ function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
                         <IoMdSend size={18} />
                     </Button>
                 </form>
-            </CardFooter>
+            </div>
         </>
     );
 }
@@ -185,7 +182,11 @@ function MessageBubble({ isSelf, msg, onProfileOpen }) {
             >
                 {msg.type === MESSAGE_TYPE.TEXT && <span>{msg.message}</span>}
                 {msg.type === MESSAGE_TYPE.IMAGE && (
-                    <Image src={msg.message} alt="upload file" />
+                    <Image
+                        src={msg.message}
+                        alt="upload file"
+                        className="h-[200px] max-h-[200px] w-[200px] max-w-[200px] object-cover"
+                    />
                 )}
             </div>
             <div

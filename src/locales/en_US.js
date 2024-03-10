@@ -25,6 +25,7 @@ const Translation = {
     logout: "Logout",
     navigation_link_chat: "Chatroom",
     navigation_link_about: "About Us",
+    language_switch: "Language Switch",
     // header
     title: "ChatRoom | Random Match Chatroom",
     description: "Quickly match with your soulmate and chat with him/her",

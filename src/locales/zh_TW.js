@@ -22,6 +22,7 @@ const Translation = {
     logout: "登出",
     navigation_link_chat: "聊天室",
     navigation_link_about: "關於我們",
+    language_switch: "語系切換",
     // header
     title: "ChatRoom | 隨機配對聊天室",
     description: "快速配對你的靈魂伴侶，並且與他/她聊天",

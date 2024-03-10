@@ -15,9 +15,9 @@ const QUICK_LINKS = [
 
 const LANGS = [
     { name: "中文", href: "/", locale: "zh-TW" },
-    { name: "English", href: "/", locale: "en" },
-    { name: "日本語", href: "/", locale: "jp" },
-    { name: "한국어", href: "/", locale: "kr" },
+    { name: "English", href: "/", locale: "en-US" },
+    { name: "日本語", href: "/", locale: "ja-JP" },
+    { name: "한국어", href: "/", locale: "ko-KR" },
 ];
 
 const SOCIALS = [
@@ -48,4 +48,27 @@ const SOCIALS = [
     },
 ];
 
-export { LANGS, QUICK_LINKS, SOCIALS };
+const LOCALES = [
+    {
+        key: "zh_TW",
+        label: "中文",
+        value: "zh-TW",
+    },
+    {
+        key: "en_US",
+        label: "English",
+        value: "en-US",
+    },
+    {
+        key: "ja_JP",
+        label: "日本語",
+        value: "ja-JP",
+    },
+    {
+        key: "ko_KR",
+        label: "한국어",
+        value: "ko-KR",
+    },
+];
+
+export { LANGS, LOCALES, QUICK_LINKS, SOCIALS };

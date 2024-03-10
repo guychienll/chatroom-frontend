@@ -72,7 +72,7 @@ const Chat = () => {
                 onOpenChange={onProfileEditorOpenChange}
                 uploadFile={handleUploadFile}
             />
-            <Card className="max-w-[300px]">
+            <Card className="max-w-[300px] md:max-w-[500px]">
                 <CardHeader className="flex justify-between">
                     <User
                         name={profile.nickname || profile.username}

@@ -1,10 +1,6 @@
 import LinkList from "@/components/Layout/Footer/LinkList";
 import Section from "@/components/Layout/Footer/Section";
-import {
-    LANGS,
-    QUICK_LINKS,
-    SOCIALS,
-} from "@/components/Layout/Footer/constants";
+import { LANGS, QUICK_LINKS, SOCIALS } from "@/components/Layout/constants";
 import Logo from "@/components/Logo";
 import { useRouter } from "next/router";
 import { useIntl } from "react-intl";
