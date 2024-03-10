@@ -58,6 +58,9 @@ function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
         });
         setMessage("");
         inputRef.current.focus();
+        if ("virtualKeyboard" in navigator) {
+            navigator.virtualKeyboard.show();
+        }
     };
 
     const handleLeaveRoom = () => {
@@ -146,18 +149,7 @@ function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
                     >
                         <IoMdImages size={18} />
                     </Button>
-                    <Button
-                        type="button"
-                        isIconOnly
-                        color="primary"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            if ("virtualKeyboard" in navigator) {
-                                navigator.virtualKeyboard.show();
-                            }
-                            onSendMessage(e);
-                        }}
-                    >
+                    <Button type="submit" isIconOnly color="primary">
                         <IoMdSend size={18} />
                     </Button>
                 </form>
