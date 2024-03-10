@@ -1,13 +1,11 @@
 import * as fileApi from "@/api/File";
 import RoomList from "@/components/Chat/RoomList";
-import useUserStore from "@/stores/user";
 import WS, { CLIENT_HANDLE_ACTIONS } from "@/websocket";
 import { useEffect, useRef, useState } from "react";
 import ChattingRoom from "./ChattingRoom";
 import { STEP } from "./constants";
 
 const Chat = () => {
-    const { profile } = useUserStore((state) => state);
     const scrollRef = useRef(null);
     const [messages, setMessages] = useState([]);
     const [room, setRoom] = useState(null);
