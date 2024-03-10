@@ -149,7 +149,17 @@ function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
                     >
                         <IoMdImages size={18} />
                     </Button>
-                    <Button type="submit" isIconOnly color="primary">
+                    <Button
+                        onMouseDown={(e) => {
+                            e.preventDefault();
+                        }}
+                        onTouchStart={(e) => {
+                            e.preventDefault();
+                        }}
+                        type="submit"
+                        isIconOnly
+                        color="primary"
+                    >
                         <IoMdSend size={18} />
                     </Button>
                 </form>
