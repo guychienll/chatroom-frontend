@@ -152,6 +152,9 @@ function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
                         color="primary"
                         onClick={(e) => {
                             e.preventDefault();
+                            if ("virtualKeyboard" in navigator) {
+                                navigator.virtualKeyboard.show();
+                            }
                             onSendMessage(e);
                         }}
                     >
