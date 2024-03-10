@@ -11,7 +11,7 @@ import {
 import clsx from "clsx";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoIosArrowBack, IoMdImages, IoMdSend } from "react-icons/io";
 import { v4 as uuid } from "uuid";
 import ProfileEditor from "./ProfileEditor";
@@ -33,6 +33,16 @@ function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
         onOpen: onProfileOpen,
         onOpenChange: onProfileOpenChange,
     } = useDisclosure();
+
+    useEffect(() => {
+        setTimeout(() => {
+            scrollRef.current.scroll({
+                top: scrollRef.current.scrollHeight,
+                left: 0,
+                behavior: "smooth",
+            });
+        }, 100);
+    }, [scrollRef]);
 
     const onSendMessage = (e) => {
         e.preventDefault();
@@ -136,7 +146,15 @@ function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
                     >
                         <IoMdImages size={18} />
                     </Button>
-                    <Button type="submit" isIconOnly color="primary">
+                    <Button
+                        type="button"
+                        isIconOnly
+                        color="primary"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onSendMessage(e);
+                        }}
+                    >
                         <IoMdSend size={18} />
                     </Button>
                 </form>
