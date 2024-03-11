@@ -95,6 +95,16 @@ const Translation = {
     validation_more_than_8: "8文字以上",
     validation_password_match: "パスワードが一致します",
     validation_6_digits: "6桁",
+
+    contact_us_title: "お問い合わせ",
+    contact_us_description:
+        "以下の情報を入力してください、迅速にご連絡いたします",
+    phone: "電話",
+    phone_placeholder: "電話番号を入力してください",
+    message: "メッセージ",
+    message_placeholder: "メッセージを入力してください",
+    send_button: "送信",
+    navigation_link_contact: "お問い合わせ",
 };
 
 export default Translation;

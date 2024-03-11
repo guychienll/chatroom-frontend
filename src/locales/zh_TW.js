@@ -93,6 +93,16 @@ const Translation = {
     validation_more_than_8: "至少 8 位數",
     validation_password_match: "密碼一致",
     validation_6_digits: "6 位數",
+
+    // contact
+    contact_us_title: "聯繫我們",
+    contact_us_description: "填入以下資訊，我們會盡快回覆您",
+    phone: "電話",
+    phone_placeholder: "請填入電話",
+    message: "訊息",
+    message_placeholder: "請填入訊息",
+    send_button: "送出",
+    navigation_link_contact: "聯繫我們",
 };
 
 export default Translation;

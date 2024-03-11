@@ -48,6 +48,13 @@ function Layout({ children }) {
                 router.push("/about");
             },
         },
+        {
+            key: "contact",
+            label: t["navigation_link_contact"],
+            action: async () => {
+                router.push("/contact");
+            },
+        },
     ];
 
     useEffect(() => {
@@ -98,6 +105,11 @@ function Layout({ children }) {
                     <NavbarItem isActive={router.pathname === "/about"}>
                         <Link className="text-danger" href="/about">
                             {t["navigation_link_about"]}
+                        </Link>
+                    </NavbarItem>
+                    <NavbarItem isActive={router.pathname === "/contact"}>
+                        <Link className="text-danger" href="/contact">
+                            {t["quick_link_contact"]}
                         </Link>
                     </NavbarItem>
                 </NavbarContent>

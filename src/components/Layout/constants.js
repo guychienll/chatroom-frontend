@@ -10,7 +10,7 @@ const QUICK_LINKS = [
     { name: "quick_link_home", href: "/" },
     { name: "quick_link_chat", href: "/chat" },
     { name: "quick_link_about", href: "/about" },
-    { name: "quick_link_contact", href: "/" },
+    { name: "quick_link_contact", href: "/contact" },
 ];
 
 const LANGS = [

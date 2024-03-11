@@ -95,6 +95,15 @@ const Translation = {
     validation_more_than_8: "8자 이상",
     validation_password_match: "비밀번호가 일치합니다",
     validation_6_digits: "6자리 숫자",
+
+    contact_us_title: "문의하기",
+    contact_us_description: "아래 정보를 입력하시면 빠르게 연락드리겠습니다",
+    phone: "전화",
+    phone_placeholder: "전화번호를 입력해주세요",
+    message: "메시지",
+    message_placeholder: "메시지를 입력해주세요",
+    send_button: "보내기",
+    navigation_link_contact: "문의하기",
 };
 
 export default Translation;

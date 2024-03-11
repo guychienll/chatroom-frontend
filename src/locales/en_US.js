@@ -95,6 +95,16 @@ const Translation = {
     validation_more_than_8: "At least 8 characters",
     validation_password_match: "Passwords Match",
     validation_6_digits: "6 Digits",
+
+    contact_us_title: "Contact Us",
+    contact_us_description:
+        "Fill in the information below, and we will contact you as soon as possible",
+    phone: "Phone",
+    phone_placeholder: "Please enter your phone number",
+    message: "Message",
+    message_placeholder: "Please enter your message",
+    send_button: "Send",
+    navigation_link_contact: "Contact Us",
 };
 
 export default Translation;
