@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { IoIosArrowBack, IoMdImages } from "react-icons/io";
+import ReactPlayer from "react-player";
 import { v4 as uuid } from "uuid";
 import { MESSAGE_TYPE } from "./constants";
 
@@ -167,13 +168,27 @@ function MessageBubble({ isSelf, msg }) {
                 )}
             >
                 {msg.type === MESSAGE_TYPE.TEXT && <span>{msg.message}</span>}
-                {msg.type === MESSAGE_TYPE.IMAGE && (
-                    <Image
-                        src={msg.message}
-                        alt="upload file"
-                        className="h-[200px] max-h-[200px] w-[200px] max-w-[200px] object-cover"
-                    />
-                )}
+                {msg.type === MESSAGE_TYPE.IMAGE &&
+                    (msg.message.match(
+                        /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|webp|avif)/g,
+                    ) ? (
+                        <Image
+                            src={msg.message}
+                            alt="upload file"
+                            className="h-[200px] max-h-[200px] w-[200px] max-w-[200px] object-cover"
+                        />
+                    ) : (
+                        <div className="video-bubble h-[200px] max-h-[200px] w-[200px] max-w-[200px] overflow-hidden rounded-lg">
+                            <ReactPlayer
+                                autoPlay
+                                muted
+                                controls
+                                width="100%"
+                                height="100%"
+                                url={msg.message}
+                            />
+                        </div>
+                    ))}
             </div>
             <div
                 className={clsx("self-end text-[8px] text-[#2c2c2c]", {
