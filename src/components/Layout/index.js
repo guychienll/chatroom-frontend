@@ -118,7 +118,7 @@ function Layout({ children }) {
                     <LoginPane />
                 </NavbarContent>
 
-                <NavbarMenu className="flex flex-col py-4">
+                <NavbarMenu className="flex flex-col py-4 pb-20">
                     {MENU_ITEMS.map((item) => (
                         <NavbarMenuItem key={item.key}>
                             <Button
