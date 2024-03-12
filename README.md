@@ -49,7 +49,25 @@ npm run build
 
 ## Learning Points
 
--   WebSocket
--   File Upload Integration (AWS S3)
--   Firebase Firestore Integration
--   fly.io deployment and dns CNAME setting custom domain
+### Backend
+    -   Node.js ( Express )
+    -   TypeScript
+    -   express-session
+    -   class-validator
+    -   WebSocket
+
+### Frontend
+    -   Fly.io
+    -   Next.js
+    -   NextUI
+    -   React
+    -   TailwindCSS
+    -   Yup
+
+### Service
+    -   Firebase Firestore
+    -   Gmail as SMTP Service
+    -   File Upload Integration ( AWS S3 )
+    -   CDN ( AWS CDN )
+    -   Docker
+    -   Docker Compose
