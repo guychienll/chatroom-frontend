@@ -23,7 +23,7 @@ function LinkList({ items = [], className }) {
             {items.map((link) => (
                 <li key={link.name}>
                     <Link
-                        href={link.href || "#"}
+                        href={link.href || router.pathname}
                         className="flex items-center hover:text-danger"
                         locale={link.locale || router.locale}
                     >

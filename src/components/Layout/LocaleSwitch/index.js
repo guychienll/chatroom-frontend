@@ -28,7 +28,7 @@ export function LocaleSwitch() {
                         key={item.key}
                         color="danger"
                         replace
-                        href="/"
+                        href={router.pathname}
                         as={Link}
                     >
                         {item.label}

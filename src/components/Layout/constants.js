@@ -14,10 +14,10 @@ const QUICK_LINKS = [
 ];
 
 const LANGS = [
-    { name: "中文", href: "/", locale: "zh-TW" },
-    { name: "English", href: "/", locale: "en-US" },
-    { name: "日本語", href: "/", locale: "ja-JP" },
-    { name: "한국어", href: "/", locale: "ko-KR" },
+    { name: "中文", locale: "zh-TW" },
+    { name: "English", locale: "en-US" },
+    { name: "日本語", locale: "ja-JP" },
+    { name: "한국어", locale: "ko-KR" },
 ];
 
 const SOCIALS = [
