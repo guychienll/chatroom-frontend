@@ -77,7 +77,7 @@ function Home() {
     return (
         <div className="min-h-[calc(100dvh-4rem)] bg-[#F7F6F2] px-4 py-6">
             <div className="content ml-auto mr-auto max-w-[1296px]">
-                <div className="flex flex-col-reverse items-center justify-between px-8 md:flex-row md:px-20">
+                <div className="flex flex-col-reverse items-center justify-between gap-y-2 px-8 md:flex-row md:px-20">
                     <div className="flex flex-col gap-y-8">
                         <div className="flex flex-col flex-wrap items-center gap-4 md:flex-row md:items-start">
                             <Chip>{t["hero_chip_1"]}</Chip>

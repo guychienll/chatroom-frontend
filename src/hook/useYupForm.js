@@ -42,13 +42,17 @@ export const useYupForm = (initialValues, schema) => {
         })();
     }, [schema, values]);
 
+    console.log(errors);
+
     const renderValidatorChips = (name) => {
         return (
             <div className="flex flex-wrap py-2">
                 {schema.fields[name].tests.map((test) => {
                     const options = test.OPTIONS;
                     const isValid = !errors.some(
-                        (err) => err.message === options.message,
+                        (err) =>
+                            err.message === options.message &&
+                            err.path === name,
                     );
                     return (
                         <Chip
