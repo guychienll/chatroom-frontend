@@ -42,8 +42,6 @@ export const useYupForm = (initialValues, schema) => {
         })();
     }, [schema, values]);
 
-    console.log(errors);
-
     const renderValidatorChips = (name) => {
         return (
             <div className="flex flex-wrap py-2">
