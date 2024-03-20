@@ -27,11 +27,16 @@ function Room(props) {
             <User
                 name={room.display.username}
                 avatarProps={{
+                    className: "min-w-[56px] min-h-[56px]",
                     src: room.display.avatar,
                     isBordered: true,
                     size: "lg",
                 }}
-                description={lastMessage}
+                description={
+                    <div className="max-w-36 overflow-hidden text-ellipsis whitespace-nowrap md:max-w-48">
+                        {lastMessage}
+                    </div>
+                }
             />
             <Button
                 onPress={() => {

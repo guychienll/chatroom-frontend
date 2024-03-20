@@ -85,91 +85,97 @@ function ForgotPassword(props) {
     return (
         <Card radius="lg" className="w-[300px] transition-height">
             <CardBody className="flex flex-col">
-                <Input
-                    disabled={remainSec}
-                    color={remainSec ? "default" : "primary"}
-                    label={t["email"]}
-                    placeholder={t["email_placeholder"]}
-                    name="username"
-                    type="email"
-                    onValueChange={onValueChange("username")}
-                    value={values.username}
-                />
-                {renderValidatorChips("username")}
-                <div className="relative w-full">
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                    }}
+                >
+                    <Input
+                        disabled={remainSec}
+                        color={remainSec ? "default" : "primary"}
+                        label={t["email"]}
+                        placeholder={t["email_placeholder"]}
+                        name="username"
+                        type="email"
+                        onValueChange={onValueChange("username")}
+                        value={values.username}
+                    />
+                    {renderValidatorChips("username")}
+                    <div className="relative w-full">
+                        <Input
+                            disabled={!remainSec}
+                            color={remainSec ? "primary" : "default"}
+                            maxLength={6}
+                            label={t["otp"]}
+                            placeholder={t["otp_placeholder"]}
+                            name="validation"
+                            type="text"
+                            onValueChange={onValueChange("validation")}
+                            value={values.validation}
+                            autoComplete="new-password"
+                        />
+                        <Progress
+                            aria-label="remaining seconds"
+                            minValue={0}
+                            maxValue={TOTAL_SECONDS}
+                            color="danger"
+                            value={remainSec}
+                            size="sm"
+                            className="absolute right-[12px] top-[13px] max-w-[75%]"
+                            isStriped
+                        />
+                    </div>
+                    {renderValidatorChips("validation")}
                     <Input
                         disabled={!remainSec}
                         color={remainSec ? "primary" : "default"}
-                        maxLength={6}
-                        label={t["otp"]}
-                        placeholder={t["otp_placeholder"]}
-                        name="validation"
-                        type="text"
-                        onValueChange={onValueChange("validation")}
-                        value={values.validation}
+                        label={t["new_password"]}
+                        placeholder={t["new_password_placeholder"]}
+                        name="password"
+                        type="password"
                         autoComplete="new-password"
+                        onValueChange={onValueChange("password")}
+                        value={values.password}
                     />
-                    <Progress
-                        aria-label="remaining seconds"
-                        minValue={0}
-                        maxValue={TOTAL_SECONDS}
-                        color="danger"
-                        value={remainSec}
-                        size="sm"
-                        className="absolute right-[12px] top-[13px] max-w-[75%]"
-                        isStriped
+                    {renderValidatorChips("password")}
+                    <Input
+                        disabled={!remainSec}
+                        color={remainSec ? "primary" : "default"}
+                        label={t["password_confirm"]}
+                        placeholder={t["password_confirm_placeholder"]}
+                        name="confirm"
+                        type="password"
+                        autoComplete="new-password"
+                        onValueChange={onValueChange("confirm")}
+                        value={values.confirm}
                     />
-                </div>
-                {renderValidatorChips("validation")}
-                <Input
-                    disabled={!remainSec}
-                    color={remainSec ? "primary" : "default"}
-                    label={t["new_password"]}
-                    placeholder={t["new_password_placeholder"]}
-                    name="password"
-                    type="password"
-                    autoComplete="new-password"
-                    onValueChange={onValueChange("password")}
-                    value={values.password}
-                />
-                {renderValidatorChips("password")}
-                <Input
-                    disabled={!remainSec}
-                    color={remainSec ? "primary" : "default"}
-                    label={t["password_confirm"]}
-                    placeholder={t["password_confirm_placeholder"]}
-                    name="confirm"
-                    type="password"
-                    autoComplete="new-password"
-                    onValueChange={onValueChange("confirm")}
-                    value={values.confirm}
-                />
-                {renderValidatorChips("confirm")}
-                {remainSec ? (
-                    <Button
-                        isLoading={isOtpConsuming}
-                        className="w-full disabled:bg-default"
-                        disabled={values.validation.length !== 6}
-                        type="button"
-                        color="danger"
-                        variant="solid"
-                        onClick={handleUpdatePassword}
-                    >
-                        {t["change_password_button"]}
-                    </Button>
-                ) : (
-                    <Button
-                        isLoading={isOtpGenerating}
-                        className="w-full disabled:bg-default"
-                        disabled={false}
-                        type="button"
-                        color="danger"
-                        variant="solid"
-                        onClick={handleGenerateOtp}
-                    >
-                        {t["send_otp_button"]}
-                    </Button>
-                )}
+                    {renderValidatorChips("confirm")}
+                    {remainSec ? (
+                        <Button
+                            isLoading={isOtpConsuming}
+                            className="w-full disabled:bg-default"
+                            disabled={values.validation.length !== 6}
+                            type="button"
+                            color="danger"
+                            variant="solid"
+                            onClick={handleUpdatePassword}
+                        >
+                            {t["change_password_button"]}
+                        </Button>
+                    ) : (
+                        <Button
+                            isLoading={isOtpGenerating}
+                            className="w-full disabled:bg-default"
+                            disabled={false}
+                            type="button"
+                            color="danger"
+                            variant="solid"
+                            onClick={handleGenerateOtp}
+                        >
+                            {t["send_otp_button"]}
+                        </Button>
+                    )}
+                </form>
             </CardBody>
         </Card>
     );

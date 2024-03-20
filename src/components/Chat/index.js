@@ -1,4 +1,3 @@
-import * as fileApi from "@/api/File";
 import RoomList from "@/components/Chat/RoomList";
 import WS, { CLIENT_HANDLE_ACTIONS } from "@/websocket";
 import { useEffect, useRef, useState } from "react";
@@ -52,10 +51,6 @@ const Chat = () => {
         }
     }, [step]);
 
-    const handleUploadFile = async (e, filename) => {
-        return await fileApi.upload(e.target.files[0], { filename });
-    };
-
     if (!isChatting) {
         return <RoomList step={step} setStep={setStep} />;
     }
@@ -65,7 +60,7 @@ const Chat = () => {
             room={room}
             messages={messages}
             scrollRef={scrollRef}
-            handleUploadFile={handleUploadFile}
+
         />
     );
 };

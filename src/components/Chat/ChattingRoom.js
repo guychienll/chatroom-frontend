@@ -1,3 +1,4 @@
+import * as fileApi from "@/api/File";
 import useUserStore from "@/stores/user";
 import WS, { CLIENT_ACTIONS } from "@/websocket";
 import { Avatar, Button, Image, Input, ScrollShadow } from "@nextui-org/react";
@@ -17,7 +18,7 @@ ChattingRoom.propTypes = {
     handleUploadFile: PropTypes.func.isRequired,
 };
 
-function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
+function ChattingRoom({ room, messages, scrollRef }) {
     const { profile } = useUserStore((state) => state);
     const inputRef = useRef(null);
     const [message, setMessage] = useState("");
@@ -56,7 +57,11 @@ function ChattingRoom({ room, messages, scrollRef, handleUploadFile }) {
     };
 
     const sendImage = async (e) => {
-        const url = await handleUploadFile(e);
+        const file = e.target.files[0];
+        const url = await fileApi.upload(e.target.files[0], {
+            filename: `${file.name}`,
+            pathname: `room-images/${room.id}/`,
+        });
         const instance = WS.getInstance();
         instance.send(CLIENT_ACTIONS.SEND_MESSAGE, {
             id: uuid(),
