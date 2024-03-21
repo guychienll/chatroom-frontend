@@ -8,9 +8,9 @@ const Chat = () => {
     const scrollRef = useRef(null);
     const [messages, setMessages] = useState([]);
     const [room, setRoom] = useState(null);
-
     const [step, setStep] = useState(STEP.IDLE);
     const isChatting = step !== STEP.IDLE && step !== STEP.WAITING;
+    const [isSomeoneTyping, setIsSomeoneTyping] = useState(false);
 
     useEffect(() => {
         if (step !== STEP.IDLE) {
@@ -18,6 +18,26 @@ const Chat = () => {
             instance.ws.onmessage = (e) => {
                 const _data = JSON.parse(e.data);
                 switch (_data.action) {
+                    case CLIENT_HANDLE_ACTIONS.RECEIVE_TYPING:
+                        setIsSomeoneTyping(true);
+                        setTimeout(() => {
+                            scrollRef.current.scroll({
+                                top: scrollRef.current.scrollHeight,
+                                left: 0,
+                                behavior: "smooth",
+                            });
+                        }, 100);
+                        break;
+                    case CLIENT_HANDLE_ACTIONS.RECEIVE_STOP_TYPING:
+                        setIsSomeoneTyping(false);
+                        setTimeout(() => {
+                            scrollRef.current.scroll({
+                                top: scrollRef.current.scrollHeight,
+                                left: 0,
+                                behavior: "smooth",
+                            });
+                        }, 100);
+                        break;
                     case CLIENT_HANDLE_ACTIONS.RECEIVE_MESSAGE:
                         setMessages((prev) => {
                             return [...prev, _data.payload];
@@ -60,7 +80,7 @@ const Chat = () => {
             room={room}
             messages={messages}
             scrollRef={scrollRef}
-
+            isSomeoneTyping={isSomeoneTyping}
         />
     );
 };

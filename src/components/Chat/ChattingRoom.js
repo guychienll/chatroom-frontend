@@ -1,24 +1,28 @@
 import * as fileApi from "@/api/File";
 import MessageBubble from "@/components/Chat/MessageBubble";
-import { MINE_TYPE } from "@/components/Chat/constants";
+import { CDN_URL, MINE_TYPE } from "@/components/Chat/constants";
 import useUserStore from "@/stores/user";
 import WS, { CLIENT_ACTIONS } from "@/websocket";
-import { Button, Input, ScrollShadow } from "@nextui-org/react";
+import { Avatar, Button, Input, ScrollShadow } from "@nextui-org/react";
+import clsx from "clsx";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { IoIosArrowBack, IoMdImages } from "react-icons/io";
+import BeatLoader from "react-spinners/BeatLoader";
 import { v4 as uuid } from "uuid";
 
 ChattingRoom.propTypes = {
     room: PropTypes.object.isRequired,
     messages: PropTypes.array.isRequired,
     scrollRef: PropTypes.object.isRequired,
+    isSomeoneTyping: PropTypes.bool.isRequired,
 };
 
-function ChattingRoom({ room, messages, scrollRef }) {
+function ChattingRoom({ room, messages, scrollRef, isSomeoneTyping }) {
     const { profile } = useUserStore((state) => state);
     const inputRef = useRef(null);
     const [message, setMessage] = useState("");
+    const [isTyping, setIsTyping] = useState(false);
 
     useEffect(() => {
         setTimeout(() => {
@@ -29,6 +33,22 @@ function ChattingRoom({ room, messages, scrollRef }) {
             });
         }, 100);
     }, [scrollRef]);
+
+    useEffect(() => {
+        if (isTyping) {
+            const instance = WS.getInstance();
+            instance.send(CLIENT_ACTIONS.TYPING, {
+                username: profile.username,
+                room,
+            });
+        } else {
+            const instance = WS.getInstance();
+            instance.send(CLIENT_ACTIONS.STOP_TYPING, {
+                username: profile.username,
+                room,
+            });
+        }
+    }, [isTyping, profile.username, room]);
 
     const sendMessage = (e) => {
         e.preventDefault();
@@ -77,12 +97,31 @@ function ChattingRoom({ room, messages, scrollRef }) {
                 className="mb-16 flex w-full flex-col overflow-y-auto p-4"
             >
                 {messages.map((msg) => (
-                    <MessageBubble
-                        key={msg.id}
-                        isSelf={msg.uid === profile.username}
-                        msg={msg}
-                    />
+                    <MessageBubble key={msg.id} msg={msg} />
                 ))}
+                {isSomeoneTyping && (
+                    <div
+                        className={clsx(
+                            "mb-2 flex w-full max-w-full justify-start",
+                            "flex-row",
+                            "self-start",
+                        )}
+                    >
+                        <Avatar
+                            isBordered
+                            src={`${CDN_URL}/avatars/${room.uids.find((uid) => uid !== profile.username).split("@")[0]}`}
+                            className="mr-2 min-h-[32px] min-w-[32px] cursor-pointer"
+                            size="sm"
+                        />
+                        <div
+                            className={clsx(
+                                "flex min-h-8 items-center justify-center self-start rounded-md bg-primary px-3 py-4 text-[#ffffff] ",
+                            )}
+                        >
+                            <BeatLoader color="#fff" size={10} />
+                        </div>
+                    </div>
+                )}
             </ScrollShadow>
             <div className="fixed bottom-0 left-0 z-50 w-full bg-white px-4 py-2">
                 <form
@@ -102,8 +141,10 @@ function ChattingRoom({ room, messages, scrollRef }) {
                         ref={inputRef}
                         value={message}
                         onChange={(e) => {
+                            setIsTyping(true);
                             setMessage(e.target.value);
                         }}
+                        onBlur={() => setIsTyping(false)}
                         size="sm"
                         className="w-full"
                         type="text"

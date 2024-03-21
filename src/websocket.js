@@ -55,12 +55,16 @@ export const CLIENT_ACTIONS = {
     JOIN_ROOM: "join_room",
     SEND_MESSAGE: "send_message",
     LEAVE_ROOM: "leave_room",
+    TYPING: "typing",
+    STOP_TYPING: "stop_typing",
 };
 
 export const CLIENT_HANDLE_ACTIONS = {
     RECEIVE_MESSAGE: "receive_message",
     JOINED_ROOM: "joined_room",
     LEAVED_ROOM: "leaved_room",
+    RECEIVE_TYPING: "receive_typing",
+    RECEIVE_STOP_TYPING: "receive_stop_typing",
 };
 
 export default WSocket;

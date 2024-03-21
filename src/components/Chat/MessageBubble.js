@@ -4,6 +4,7 @@ import {
     MINE_TYPE,
     VIDEO_TYPES,
 } from "@/components/Chat/constants";
+import useUserStore from "@/stores/user";
 import { Avatar, Image } from "@nextui-org/react";
 import clsx from "clsx";
 import dayjs from "dayjs";
@@ -11,11 +12,13 @@ import PropTypes from "prop-types";
 import ReactPlayer from "react-player";
 
 MessageBubble.propTypes = {
-    isSelf: PropTypes.bool.isRequired,
     msg: PropTypes.object.isRequired,
 };
 
-function MessageBubble({ isSelf, msg }) {
+function MessageBubble(props) {
+    const { msg } = props;
+    const { profile } = useUserStore((state) => state);
+    const isSelf = msg.uid === profile.username;
     return (
         <div
             className={clsx("mb-2 flex w-full max-w-full justify-start", {
