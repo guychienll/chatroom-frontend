@@ -31,10 +31,10 @@ function ContactPage() {
 
     return (
         <div className="ml-auto mr-auto flex max-w-[1296px] flex-col items-center">
-            <h1 className="my-4 text-4xl font-bold tracking-wider text-danger">
+            <h1 className="my-4 px-3 text-4xl font-bold tracking-wider text-danger">
                 {t["contact_us_title"]}
             </h1>
-            <small className="mb-4 text-gray-500">
+            <small className="mb-4 px-4 text-gray-500">
                 {t["contact_us_description"]}
             </small>
             <div className="flex w-full flex-col items-center gap-4 px-4 md:flex-row">
