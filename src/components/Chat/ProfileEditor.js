@@ -79,7 +79,7 @@ function ProfileEditor() {
     };
 
     return (
-        <Card className="w-full max-w-[280px]">
+        <Card className="w-full max-w-[280px]  md:max-w-[350px]">
             <CardHeader className="flex flex-col items-center">
                 <input
                     hidden

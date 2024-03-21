@@ -4,7 +4,7 @@ import { withAuthGuard } from "@/hocs/AuthGuard";
 
 function ProfilePage() {
     return (
-        <div className="flex h-[calc(100dvh-4rem)] max-w-[1296px] items-center justify-center">
+        <div className="ml-auto mr-auto flex h-[calc(100dvh-4rem)] max-w-[1296px] items-center justify-center">
             <ProfileEditor />
         </div>
     );
