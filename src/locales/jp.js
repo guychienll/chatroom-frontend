@@ -75,7 +75,7 @@ const Translation = {
     go_to_login_button: "ログイン画面へ",
 
     // form - profile
-    profile_editor_title: "プロファイル編集",
+    profile_editor: "プロファイル編集",
     nickname: "ニックネーム",
     nickname_placeholder: "ニックネームを入力してください",
     gender: "性別",
@@ -105,6 +105,10 @@ const Translation = {
     message_placeholder: "メッセージを入力してください",
     send_button: "送信",
     navigation_link_contact: "お問い合わせ",
+
+    undefined: "未定義",
+    validation_over_max_length: "最大長さを超えています",
+    validation_valid_options: "有効なオプション",
 };
 
 export default Translation;

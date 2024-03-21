@@ -25,7 +25,7 @@ function Room(props) {
     return (
         <div className="my-4 flex flex-row items-center justify-between">
             <User
-                name={room.display.username}
+                name={room.display.nickname || room.display.username}
                 avatarProps={{
                     className: "min-w-[56px] min-h-[56px]",
                     src: room.display.avatar,

@@ -1,6 +1,14 @@
 import * as authApi from "@/api/Auth";
 import useUserStore from "@/stores/user";
-import { Button, NavbarItem } from "@nextui-org/react";
+import {
+    Button,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownTrigger,
+    NavbarItem,
+    User,
+} from "@nextui-org/react";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
@@ -21,19 +29,61 @@ function LoginPane({ className, onClick }) {
         <div className={clsx("", className)}>
             {profile ? (
                 <NavbarItem className="flex animate-appearance-in gap-x-4">
-                    <Button
-                        onClick={async () => {
-                            await authApi.logout();
-                            await router.push("/");
-                            cleanProfile();
-                            onClick && onClick();
-                        }}
-                        color="danger"
-                        variant="ghost"
-                        className="tracking-wider"
-                    >
-                        {t["logout"]}
-                    </Button>
+                    <Dropdown>
+                        <DropdownTrigger>
+                            <User
+                                className="cursor-pointer"
+                                name={
+                                    profile.nickname ||
+                                    profile.username.split("@")[0]
+                                }
+                                avatarProps={{
+                                    src: profile.avatar,
+                                    isBordered: true,
+                                }}
+                                description={
+                                    <div className="max-w-36 overflow-hidden text-ellipsis whitespace-nowrap md:max-w-48">
+                                        {profile.username}
+                                    </div>
+                                }
+                            />
+                        </DropdownTrigger>
+                        <DropdownMenu
+                            aria-label="Dynamic Actions"
+                            items={[
+                                {
+                                    key: "profile",
+                                    label: t["profile_editor"],
+                                    action: async () => {
+                                        await router.push("/profile");
+                                        onClick && onClick();
+                                    },
+                                },
+                                {
+                                    key: "logout",
+                                    label: t["logout"],
+                                    action: async () => {
+                                        await authApi.logout();
+                                        await router.push("/");
+                                        cleanProfile();
+                                        onClick && onClick();
+                                    },
+                                },
+                            ]}
+                        >
+                            {(item) => (
+                                <DropdownItem
+                                    key={item.key}
+                                    color="danger"
+                                    onPress={async () => {
+                                        await item.action();
+                                    }}
+                                >
+                                    {item.label}
+                                </DropdownItem>
+                            )}
+                        </DropdownMenu>
+                    </Dropdown>
                 </NavbarItem>
             ) : (
                 <NavbarItem>

@@ -46,10 +46,23 @@ const RegistrationFormSchema = object({
     confirm: PasswordConfirm,
 });
 
+const ProfileEditFormSchema = object({
+    nickname: string(),
+    birthday: string(),
+    avatar: string(),
+    gender: string().test(
+        "valid-options",
+        "validation_valid_options",
+        (value) => ["male", "female", "other"].includes(value),
+    ),
+    bio: string().max(100, "validation_over_max_length"),
+});
+
 export {
     ForgotPasswordFormSchema,
     LoginFormSchema,
     OtpFormSchema,
+    ProfileEditFormSchema,
     QuickRegisterFormSchema,
     RegistrationFormSchema,
 };

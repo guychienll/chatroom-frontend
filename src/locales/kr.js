@@ -75,7 +75,7 @@ const Translation = {
     go_to_login_button: "로그인하러 가기",
 
     // form - profile
-    profile_editor_title: "프로필 편집",
+    profile_editor: "프로필 편집",
     nickname: "닉네임",
     nickname_placeholder: "닉네임을 입력하세요",
     gender: "성별",
@@ -104,6 +104,10 @@ const Translation = {
     message_placeholder: "메시지를 입력해주세요",
     send_button: "보내기",
     navigation_link_contact: "문의하기",
+
+    undefined: "미정의",
+    validation_over_max_length: "최대 길이 초과",
+    validation_valid_options: "유효한 옵션",
 };
 
 export default Translation;

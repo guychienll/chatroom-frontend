@@ -75,7 +75,7 @@ const Translation = {
     go_to_login_button: "Go to Login",
 
     // form - profile
-    profile_editor_title: "Edit Profile",
+    profile_editor: "Edit Profile",
     nickname: "Nickname",
     nickname_placeholder: "Please enter your nickname",
     gender: "Gender",
@@ -105,6 +105,10 @@ const Translation = {
     message_placeholder: "Please enter your message",
     send_button: "Send",
     navigation_link_contact: "Contact Us",
+
+    undefined: "undefined",
+    validation_over_max_length: "exceeds maximum length",
+    validation_valid_options: "valid options",
 };
 
 export default Translation;

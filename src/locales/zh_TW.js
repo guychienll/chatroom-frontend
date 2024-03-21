@@ -73,7 +73,7 @@ const Translation = {
     login_title: "登入",
 
     //form - profile
-    profile_editor_title: "編輯個人資料",
+    profile_editor: "編輯個人資料",
     nickname: "暱稱",
     nickname_placeholder: "請填入暱稱",
     gender: "生理性別",
@@ -103,6 +103,10 @@ const Translation = {
     message_placeholder: "請填入訊息",
     send_button: "送出",
     navigation_link_contact: "聯繫我們",
+
+    undefined: "未定義",
+    validation_over_max_length: "超過最大長度",
+    validation_valid_options: "合法選項",
 };
 
 export default Translation;

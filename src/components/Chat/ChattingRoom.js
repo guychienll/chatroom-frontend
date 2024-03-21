@@ -1,21 +1,18 @@
 import * as fileApi from "@/api/File";
+import MessageBubble from "@/components/Chat/MessageBubble";
+import { MINE_TYPE } from "@/components/Chat/constants";
 import useUserStore from "@/stores/user";
 import WS, { CLIENT_ACTIONS } from "@/websocket";
-import { Avatar, Button, Image, Input, ScrollShadow } from "@nextui-org/react";
-import clsx from "clsx";
-import dayjs from "dayjs";
+import { Button, Input, ScrollShadow } from "@nextui-org/react";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { IoIosArrowBack, IoMdImages } from "react-icons/io";
-import ReactPlayer from "react-player";
 import { v4 as uuid } from "uuid";
-import { MESSAGE_TYPE } from "./constants";
 
 ChattingRoom.propTypes = {
     room: PropTypes.object.isRequired,
     messages: PropTypes.array.isRequired,
     scrollRef: PropTypes.object.isRequired,
-    handleUploadFile: PropTypes.func.isRequired,
 };
 
 function ChattingRoom({ room, messages, scrollRef }) {
@@ -38,10 +35,9 @@ function ChattingRoom({ room, messages, scrollRef }) {
         const instance = WS.getInstance();
         instance.send(CLIENT_ACTIONS.SEND_MESSAGE, {
             id: uuid(),
-            type: MESSAGE_TYPE.TEXT,
+            type: MINE_TYPE.TEXT_PLAIN,
             uid: profile.username,
             date: new Date().toISOString(),
-            user: profile,
             room,
             message,
         });
@@ -65,12 +61,11 @@ function ChattingRoom({ room, messages, scrollRef }) {
         const instance = WS.getInstance();
         instance.send(CLIENT_ACTIONS.SEND_MESSAGE, {
             id: uuid(),
-            type: MESSAGE_TYPE.IMAGE,
+            type: file.type,
             uid: profile.username,
             message: url,
-            room: room,
+            room,
             date: new Date().toISOString(),
-            user: profile,
         });
     };
 
@@ -141,69 +136,6 @@ function ChattingRoom({ room, messages, scrollRef }) {
                 </form>
             </div>
         </>
-    );
-}
-
-MessageBubble.propTypes = {
-    isSelf: PropTypes.bool.isRequired,
-    msg: PropTypes.object.isRequired,
-};
-
-function MessageBubble({ isSelf, msg }) {
-    return (
-        <div
-            className={clsx("mb-2 flex w-full max-w-full justify-start", {
-                "flex-row-reverse": isSelf,
-                "flex-row": !isSelf,
-                "self-start": !isSelf,
-            })}
-        >
-            {!isSelf && (
-                <Avatar
-                    isBordered
-                    src={msg.user.avatar}
-                    className="mr-2 min-h-[32px] min-w-[32px] cursor-pointer"
-                    size="sm"
-                />
-            )}
-            <div
-                className={clsx(
-                    "min-h-8 whitespace-pre-line break-all rounded-md  px-3 py-2 text-[#ffffff]",
-                    { "bg-danger": isSelf, "bg-primary": !isSelf },
-                )}
-            >
-                {msg.type === MESSAGE_TYPE.TEXT && <span>{msg.message}</span>}
-                {msg.type === MESSAGE_TYPE.IMAGE &&
-                    (msg.message.match(
-                        /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|webp|avif)/g,
-                    ) ? (
-                        <Image
-                            src={msg.message}
-                            alt="upload file"
-                            className="h-[200px] max-h-[200px] w-[200px] max-w-[200px] object-cover"
-                        />
-                    ) : (
-                        <div className="video-bubble h-[200px] max-h-[200px] w-[200px] max-w-[200px] overflow-hidden rounded-lg">
-                            <ReactPlayer
-                                autoPlay
-                                muted
-                                controls
-                                width="100%"
-                                height="100%"
-                                url={msg.message}
-                            />
-                        </div>
-                    ))}
-            </div>
-            <div
-                className={clsx("self-end text-[8px] text-[#2c2c2c]", {
-                    "ml-1": !isSelf,
-                    "mr-1": isSelf,
-                })}
-            >
-                {dayjs(msg.date).format("HH:mm")}
-            </div>
-        </div>
     );
 }
 

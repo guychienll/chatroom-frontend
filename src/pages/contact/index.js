@@ -42,7 +42,7 @@ function ContactPage() {
                     className="flex-2 h-[400px] w-full max-w-[600px]"
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28908.33780354687!2d121.56977588715978!3d25.083500278181074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442ac8cce7a9b6d%3A0x377d7129bd402c63!2zMTE05Y-w5YyX5biC5YWn5rmW5Y2A!5e0!3m2!1szh-TW!2stw!4v1710131015235!5m2!1szh-TW!2stw"
                     height="400"
-                    allowfullscreen={false}
+                    allowFullScreen={false}
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                 />
