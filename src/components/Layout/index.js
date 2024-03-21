@@ -4,7 +4,6 @@ import Header from "@/components/Layout/Header";
 import { LocaleSwitch } from "@/components/Layout/LocaleSwitch";
 import LoginPane from "@/components/Layout/LoginPane";
 import Logo from "@/components/Logo";
-import { delay } from "@/helper/time";
 import useUserStore from "@/stores/user";
 import {
     Button,
@@ -61,7 +60,6 @@ function Layout({ children }) {
         (async () => {
             try {
                 setLoading(true);
-                await delay(1500);
                 const _profile = await userApi.profile();
 
                 setProfile(_profile);

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { delay } from "../../helper/time";
+
 Redirect.propTypes = {
     path: PropTypes.string,
 };
@@ -15,7 +16,7 @@ function Redirect({ path = "/auth" }) {
 
     useEffect(() => {
         (async () => {
-            await delay(2500);
+            await delay(300);
             await router.push(path);
         })();
     }, [path, router]);
