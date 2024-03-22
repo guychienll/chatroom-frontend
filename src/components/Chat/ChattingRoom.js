@@ -5,9 +5,11 @@ import useUserStore from "@/stores/user";
 import WS, { CLIENT_ACTIONS } from "@/websocket";
 import { Avatar, Button, Input, ScrollShadow } from "@nextui-org/react";
 import clsx from "clsx";
+import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { IoIosArrowBack, IoMdImages } from "react-icons/io";
+import { useIntl } from "react-intl";
 import BeatLoader from "react-spinners/BeatLoader";
 import { v4 as uuid } from "uuid";
 
@@ -23,6 +25,9 @@ function ChattingRoom({ room, messages, scrollRef, isSomeoneTyping }) {
     const inputRef = useRef(null);
     const [message, setMessage] = useState("");
     const [isTyping, setIsTyping] = useState(false);
+    const router = useRouter();
+    const intl = useIntl();
+    const t = intl.messages[router.locale];
 
     useEffect(() => {
         setTimeout(() => {
@@ -123,7 +128,7 @@ function ChattingRoom({ room, messages, scrollRef, isSomeoneTyping }) {
                     </div>
                 )}
             </ScrollShadow>
-            <div className="fixed bottom-0 left-0 z-50 w-full bg-white px-4 py-2">
+            <div className="fixed bottom-0 left-0 z-0 w-full bg-white px-4 py-2">
                 <form
                     onSubmit={sendMessage}
                     className="flex flex-grow flex-row items-center gap-2"
@@ -172,7 +177,7 @@ function ChattingRoom({ room, messages, scrollRef, isSomeoneTyping }) {
                         }}
                         className="min-h-[40px] min-w-[60px] rounded-large bg-primary text-white transition-background active:bg-primary-200 active:text-white"
                     >
-                        送出
+                        {t["send_button"]}
                     </button>
                 </form>
             </div>
