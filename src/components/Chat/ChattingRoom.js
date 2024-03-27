@@ -7,7 +7,7 @@ import { Avatar, Button, Input, ScrollShadow } from "@nextui-org/react";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoIosArrowBack, IoMdImages } from "react-icons/io";
 import { useIntl } from "react-intl";
 import BeatLoader from "react-spinners/BeatLoader";
@@ -30,10 +30,7 @@ function ChattingRoom({ room, messages, scrollRef, isSomeoneTyping }) {
     const intl = useIntl();
     const t = intl.messages[router.locale];
 
-    const onTimeIsUp = useCallback(() => {}, []);
-
     const { seconds, reset } = useCountDownTimer({
-        onTimeIsUp,
         totalSeconds: 5,
     });
 
