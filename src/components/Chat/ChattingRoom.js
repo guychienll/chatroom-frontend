@@ -80,7 +80,7 @@ function ChattingRoom({ room, messages, scrollRef, isSomeoneTyping }) {
     const sendImage = async (e) => {
         const file = e.target.files[0];
         const url = await fileApi.upload(e.target.files[0], {
-            filename: `${file.name}`,
+            filename: `${file.name}-${new Date().getTime()}`,
             pathname: `room-images/${room.id}/`,
         });
         const instance = WS.getInstance();
@@ -104,29 +104,32 @@ function ChattingRoom({ room, messages, scrollRef, isSomeoneTyping }) {
                 {messages.map((msg) => (
                     <MessageBubble key={msg.id} msg={msg} />
                 ))}
-                {isSomeoneTyping && (
-                    <div
-                        className={clsx(
-                            "mb-2 flex w-full max-w-full justify-start",
-                            "flex-row",
-                            "self-start",
-                        )}
-                    >
-                        <Avatar
-                            isBordered
-                            src={`${CDN_URL}/avatars/${room.uids.find((uid) => uid !== profile.username).split("@")[0]}`}
-                            className="mr-2 min-h-[32px] min-w-[32px] cursor-pointer"
-                            size="sm"
-                        />
-                        <div
-                            className={clsx(
-                                "flex min-h-8 items-center justify-center self-start rounded-md bg-primary px-3 py-4 text-[#ffffff] ",
-                            )}
-                        >
-                            <BeatLoader color="#fff" size={10} />
-                        </div>
-                    </div>
-                )}
+                <div
+                    className={clsx(
+                        "mb-2 flex w-full max-w-full justify-start",
+                        "flex-row",
+                        "self-start",
+                        "min-h-8",
+                    )}
+                >
+                    {isSomeoneTyping && (
+                        <>
+                            <Avatar
+                                isBordered
+                                src={`${CDN_URL}/avatars/${room.uids.find((uid) => uid !== profile.username).split("@")[0]}`}
+                                className="mr-2 min-h-[32px] min-w-[32px] cursor-pointer"
+                                size="sm"
+                            />
+                            <div
+                                className={clsx(
+                                    "flex h-full items-center justify-center self-start rounded-md bg-primary px-3 py-4 text-[#ffffff] ",
+                                )}
+                            >
+                                <BeatLoader color="#fff" size={10} />
+                            </div>
+                        </>
+                    )}
+                </div>
             </ScrollShadow>
             <div className="fixed bottom-0 left-0 z-0 w-full bg-white px-4 py-2">
                 <form

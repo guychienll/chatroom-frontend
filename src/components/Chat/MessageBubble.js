@@ -67,8 +67,7 @@ function MessageBubble(props) {
             <div
                 className={clsx("self-end text-[8px] text-[#2c2c2c]", {
                     "ml-1": !isSelf,
-                    "mr-1": isSelf,
-                })}
+                    "mr-1": isSelf, })}
             >
                 {dayjs(msg.date).format("HH:mm")}
             </div>
