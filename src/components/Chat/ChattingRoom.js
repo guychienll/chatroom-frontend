@@ -7,11 +7,12 @@ import { Avatar, Button, Input, ScrollShadow } from "@nextui-org/react";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { IoIosArrowBack, IoMdImages } from "react-icons/io";
 import { useIntl } from "react-intl";
 import BeatLoader from "react-spinners/BeatLoader";
 import { v4 as uuid } from "uuid";
+import useCountDownTimer from "@/hook/useCountDownTimer";
 
 ChattingRoom.propTypes = {
     room: PropTypes.object.isRequired,
@@ -29,6 +30,13 @@ function ChattingRoom({ room, messages, scrollRef, isSomeoneTyping }) {
     const intl = useIntl();
     const t = intl.messages[router.locale];
 
+    const onTimeIsUp = useCallback(() => {}, []);
+
+    const { seconds, reset } = useCountDownTimer({
+        onTimeIsUp,
+        totalSeconds: 5,
+    });
+
     useEffect(() => {
         setTimeout(() => {
             scrollRef.current.scroll({
@@ -40,20 +48,24 @@ function ChattingRoom({ room, messages, scrollRef, isSomeoneTyping }) {
     }, [scrollRef]);
 
     useEffect(() => {
-        if (isTyping) {
-            const instance = WS.getInstance();
+        const instance = WS.getInstance();
+        if (seconds <= 0 && isTyping) {
+            instance.send(CLIENT_ACTIONS.STOP_TYPING, {
+                username: profile.username,
+                room,
+            });
+        } else if (isTyping) {
             instance.send(CLIENT_ACTIONS.TYPING, {
                 username: profile.username,
                 room,
             });
         } else {
-            const instance = WS.getInstance();
             instance.send(CLIENT_ACTIONS.STOP_TYPING, {
                 username: profile.username,
                 room,
             });
         }
-    }, [isTyping, profile.username, room]);
+    }, [profile.username, room, seconds, isTyping]);
 
     const sendMessage = (e) => {
         e.preventDefault();
@@ -149,6 +161,7 @@ function ChattingRoom({ room, messages, scrollRef, isSomeoneTyping }) {
                         ref={inputRef}
                         value={message}
                         onChange={(e) => {
+                            reset();
                             setIsTyping(true);
                             setMessage(e.target.value);
                         }}
